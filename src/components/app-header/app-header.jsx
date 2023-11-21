@@ -4,9 +4,10 @@ import AppHeaderTab from './app-header-tab/app-header-tab';
 import { BurgerIcon, Logo, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
-function AppHeader(props) {
+function AppHeader({ className }) {
+    className = className ? className : '';
     return (
-        <header className={`${style.header_container} p-10`}>
+        <header className={`${style.header_container} ${className}`}>
             <div className={style.header_container_navigation}>
                 <AppHeaderTab icon={<BurgerIcon type="primary" />} text="Конструктор" className='mr-2'/>
                 <AppHeaderTab icon={<ListIcon type="secondary" />} text="Лента заказов"/>

@@ -1,27 +1,54 @@
 import React from "react";
 import style from "./burger-constructor.module.css";
-import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 
-function BurgerConstructor(props) {
-    const { ingredients } = props;
-
+function BurgerConstructor({ ingredients, className }) {
+    className = className ? className : "";
+    const topBun = ingredients[0];
+    const bottomBun = ingredients[ingredients.length - 1];
     return (
-        <section сlassName={style.burger_constructor_container}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {ingredients.map((ingredient, index) => {
-                    let type = index === 0 ? 'top' : (index === ingredients.length - 1 ? 'bottom' : '');
-                    return (
-                        <ConstructorElement
-                            type={type}
-                            isLocked={type === 'top' || type === 'bottom' ? true : false}
-                            text={ingredient.name}
-                            price={ingredient.price}
-                            thumbnail={ingredient.image}
-                            key={ingredient._id}
-                        />
-                    )
-                })}
+        <section сlassName={`${style.burger_constructor_container} ${className}`}>
+            <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px' }} className="mr-4">
+                <div className={style.burger_constructor_ingredient_container}>
+                    {/* <div className='pl-6'></div> */}
+                    <ConstructorElement
+                        type={'top'}
+                        isLocked={true}
+                        text={topBun.name}
+                        price={topBun.price}
+                        thumbnail={topBun.image}
+                        key={topBun._id}
+                    />
+                </div>
+                <div style={{overflowY: 'scroll', display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px', height: '600px'}} className="custom-scroll pr-4">
+                    {ingredients.map((ingredient, index) => {
+                        if (index === 0 || index === ingredients.length - 1) return (<></>)
+                        return (
+                            <div className={style.burger_constructor_ingredient_container}>
+                                <div className="mr-2"><DragIcon type="primary" /></div>
+                                <ConstructorElement
+                                    isLocked={false}
+                                    text={ingredient.name}
+                                    price={ingredient.price}
+                                    thumbnail={ingredient.image}
+                                    key={ingredient._id}
+                                />
+                            </div>
+                        )
+                    })}
+                </div>
+                <div className={style.burger_constructor_ingredient_container}>
+                    {/* <div className='pl-6'></div> */}
+                    <ConstructorElement
+                        type={'bottom'}
+                        isLocked={true}
+                        text={bottomBun.name}
+                        price={bottomBun.price}
+                        thumbnail={bottomBun.image}
+                        key={bottomBun._id}
+                    />
+                </div>
             </div>
             <div className={`${style.burger_constructor_order_container} pt-10`}>
                 <div className={`${style.burger_constructor_order_container_price} pr-10`}>

@@ -1,16 +1,17 @@
-.burger_ingredients_container {
+.burger_ingridients_category_item {
     display: flex;
     flex-direction: column;
-    justify-content: stretch;
+    justify-content: center;
     align-items: center;
 }
 
-.burger_ingredients_category {
+.burger_ingridients_category_img {
+    width: 240px;
+}
+
+.burger_ingridients_category_price_container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }

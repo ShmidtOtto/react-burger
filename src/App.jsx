@@ -8,10 +8,12 @@ import BurgerIngredients from './components/burger-ingredients/burger-ingredient
 function App() {
   return (
     <main className={style.app_container}>
-      <AppHeader/>
+      <AppHeader className='p-10'/>
       <div className={style.app_container_content}>
-        <BurgerIngredients className={'mr-10'}/>
-        <BurgerConstructor ingredients={ingredients}/>
+        <BurgerIngredients className='mr-10 pt-10' ingredients={ingredients}/>
+        <BurgerConstructor 
+          ingredients={ingredients}
+        />
       </div>
     </main>
   );
