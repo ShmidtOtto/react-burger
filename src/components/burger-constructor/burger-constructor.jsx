@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 
@@ -11,7 +12,6 @@ function BurgerConstructor({ ingredients, className }) {
         <section сlassName={`${style.burger_constructor_container} ${className}`}>
             <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px' }} className="mr-4">
                 <div className={style.burger_constructor_ingredient_container}>
-                    {/* <div className='pl-6'></div> */}
                     <ConstructorElement
                         type={'top'}
                         isLocked={true}
@@ -39,7 +39,6 @@ function BurgerConstructor({ ingredients, className }) {
                     })}
                 </div>
                 <div className={style.burger_constructor_ingredient_container}>
-                    {/* <div className='pl-6'></div> */}
                     <ConstructorElement
                         type={'bottom'}
                         isLocked={true}
@@ -61,6 +60,11 @@ function BurgerConstructor({ ingredients, className }) {
             </div>
         </section>
     );
+}
+
+BurgerConstructor.propTypes = {
+    ingredients: PropTypes.array.isRequired,
+    className: PropTypes.string
 }
 
 export default BurgerConstructor;

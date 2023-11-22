@@ -1,5 +1,7 @@
 import React from 'react';
 import style from './burger-ingredients-cart.module.css';
+
+import PropTypes from 'prop-types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function BurgerIngredientCart({ image, price, name, className }) {
@@ -14,6 +16,13 @@ function BurgerIngredientCart({ image, price, name, className }) {
             <p className="text text_type_main-default">{name}</p>
         </div>
     );
+}
+
+BurgerIngredientCart.prototypes = {
+    image: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    className: PropTypes.string
 }
 
 export default BurgerIngredientCart;

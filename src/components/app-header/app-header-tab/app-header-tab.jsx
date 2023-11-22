@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./app-header-tab.module.css";
+import PropTypes from 'prop-types';
 
 function AppHeaderTab({ icon, text, className }) {
     className = className ? className : '';
@@ -9,6 +10,11 @@ function AppHeaderTab({ icon, text, className }) {
             <p className='text text_type_main-default ml-2'>{text}</p>
         </nav>
     );
+}
+AppHeaderTab.propTypes = {
+    icon: PropTypes.node.isRequired,
+    text: PropTypes.string.isRequired,
+    className: PropTypes.string
 }
 
 export default AppHeaderTab;

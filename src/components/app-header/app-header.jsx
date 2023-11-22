@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './app-header.module.css';
+import PropTypes from 'prop-types';
 import AppHeaderTab from './app-header-tab/app-header-tab';
 import { BurgerIcon, Logo, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -18,5 +19,8 @@ function AppHeader({ className }) {
     );
 }
 
+AppHeader.propTypes = {
+    className: PropTypes.string
+}
 
 export default AppHeader;

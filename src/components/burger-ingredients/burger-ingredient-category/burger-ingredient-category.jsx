@@ -1,9 +1,11 @@
 import React from "react";
 import style from './burger-ingredient-category.module.css';
+import PropTypes from 'prop-types';
 import BurgerIngredientCart from "../burger-ingredients-cart/burger-ingredients-cart";
 
 function BurgerIngredientCategory ({ categoryName, className, ingredients }) {
     className = className ? className : '';
+    console.log(ingredients)
     return (
         <div className={`${style.burger_ingridients_categorys_container} ${className}`}>
             <h4 className="text text_type_main-medium mb-6">{categoryName}</h4>
@@ -20,6 +22,12 @@ function BurgerIngredientCategory ({ categoryName, className, ingredients }) {
             </div>
         </div>
     );
+}
+
+BurgerIngredientCategory.propTypes = {
+    categoryName: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    ingredients: PropTypes.array.isRequired,
 }
 
 export default BurgerIngredientCategory;
