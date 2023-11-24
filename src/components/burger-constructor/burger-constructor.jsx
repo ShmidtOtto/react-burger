@@ -1,15 +1,23 @@
-import React from "react";
+import { useState } from "react";
+import cn from 'classnames';
 import style from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from '../modals/modal/modal';
+import OrderDetails from "../modals/order-details/order-details";
 
 
 function BurgerConstructor({ ingredients, className }) {
-    className = className ? className : "";
+    const [ modalIsOpen, setModalIsOpen ] = useState(false);
+
+    const closeModal = () => setModalIsOpen(false);
+    const openModal = () => setModalIsOpen(true);
+
     const topBun = ingredients[0];
     const bottomBun = ingredients[ingredients.length - 1];
     return (
-        <section сlassName={`${style.burger_constructor_container} ${className}`}>
+        <section className={cn(style.burger_constructor_container, className)}>
+            <Modal isOpen={modalIsOpen} close={closeModal}><OrderDetails/></Modal>
             <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px' }} className="mr-4">
                 <div className={style.burger_constructor_ingredient_container}>
                     <ConstructorElement
@@ -21,7 +29,7 @@ function BurgerConstructor({ ingredients, className }) {
                         key={topBun._id}
                     />
                 </div>
-                <div style={{overflowY: 'scroll', display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px', height: '600px'}} className="custom-scroll pr-4">
+                <div style={{overflowY: 'scroll', display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px', height: '620px'}} className="custom-scroll pr-4">
                     {ingredients.map((ingredient, index) => {
                         if (index === 0 || index === ingredients.length - 1) return (<></>)
                         return (
@@ -54,7 +62,7 @@ function BurgerConstructor({ ingredients, className }) {
                     <p className="text text_type_main-large pr-4">610</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large">
+                <Button htmlType="button" type="primary" size="large" onClick={openModal}>
                     Оформить заказ
                 </Button>
             </div>
@@ -63,8 +71,7 @@ function BurgerConstructor({ ingredients, className }) {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.array.isRequired,
-    className: PropTypes.string
+    ingredients: PropTypes.array.isRequired
 }
 
 export default BurgerConstructor;

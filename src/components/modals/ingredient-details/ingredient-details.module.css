@@ -1,0 +1,25 @@
+.ingredient_details_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.ingredient_details_container_img {
+    min-width: 480px;
+    height: auto;
+}
+
+.ingredient_detail_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ingredient_detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

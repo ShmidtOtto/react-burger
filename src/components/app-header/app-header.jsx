@@ -1,4 +1,4 @@
-import React from 'react';
+import cn from 'classnames';
 import style from './app-header.module.css';
 import PropTypes from 'prop-types';
 import AppHeaderTab from './app-header-tab/app-header-tab';
@@ -6,9 +6,8 @@ import { BurgerIcon, Logo, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 
 
 function AppHeader({ className }) {
-    className = className ? className : '';
     return (
-        <header className={`${style.header_container} ${className}`}>
+        <header className={cn(style.header_container, className)}>
             <div className={style.header_container_navigation}>
                 <AppHeaderTab icon={<BurgerIcon type="primary" />} text="Конструктор" className='mr-2'/>
                 <AppHeaderTab icon={<ListIcon type="secondary" />} text="Лента заказов"/>

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import cn from 'classnames';
 import style from './App.module.css';
 import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 
-const ingridientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
-
 function App() {
+  const ingridientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
+  
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
@@ -25,13 +26,13 @@ function App() {
   }, [])
 
   return (
-    <main className={style.app_container}>
-      <AppHeader className='p-10' />
+    <main className={cn(style.app_container, 'mr-10', 'ml-10')}>
+      <AppHeader className='mt-10 mr-10 ml-10' />
       <div className={style.app_container_content}>
         {ingredients.length !== 0 && (
           <>
-            <BurgerIngredients className='mr-10 pt-10' ingredients={ingredients} />
-            <BurgerConstructor ingredients={ingredients} />
+            <BurgerIngredients className='mr-10 mt-10' ingredients={ingredients} />
+            <BurgerConstructor className='mt-25' ingredients={ingredients}/>
           </>
         )}
       </div>

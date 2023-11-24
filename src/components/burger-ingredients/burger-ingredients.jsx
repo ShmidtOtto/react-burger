@@ -1,22 +1,21 @@
-import React from "react";
+import { useState } from "react";
 import ingredientsTranslate from "../../utils/ingredients-translate";
+import cn from 'classnames';
 import style from './burger-ingredients.module.css';
 import PropTypes from "prop-types";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredientCategory from "./burger-ingredient-category/burger-ingredient-category";
 
-function BurgerIngredients({className, ingredients}) {
-    className = className ? className : '';
-    const [current, setCurrentTab] = React.useState('Булки');
+function BurgerIngredients({ ingredients, className }) {
+    const [current, setCurrentTab] = useState('Булки');
+
     let categories = [];
     ingredients.forEach(ingredient => {
-        if (!categories.includes(ingredient.type)) {
-            categories.push(ingredient.type)
-        }
+        if (!categories.includes(ingredient.type)) categories.push(ingredient.type);
     });
 
     return (
-        <section className={`${style.burger_ingredients_container} ${className}`}>
+        <section className={cn(style.burger_ingredients_container, className)}>
             <h3 className="text text_type_main-medium pb-5 ">Соберите бургер</h3>
             <div style={{ display: 'flex' }} className="pb-10">
                 <Tab value="Булки" active={current === 'Булки'} onClick={() => setCurrentTab('Булки')}>
@@ -36,6 +35,7 @@ function BurgerIngredients({className, ingredients}) {
                             categoryName={ingredientsTranslate[category]} 
                             key={index} 
                             ingredients={ingredients.filter(ingredient => ingredient.type === category)}
+
                         />
                     )
                 })}
@@ -46,8 +46,7 @@ function BurgerIngredients({className, ingredients}) {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.array.isRequired,
-    className: PropTypes.string
+    ingredients: PropTypes.array.isRequired
 }
 
 export default BurgerIngredients;
