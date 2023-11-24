@@ -1,19 +1,5 @@
-.modal_layer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-}
-
 .modal_container {
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -27,4 +13,8 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.modal_icon_close {
+    cursor: pointer;
 }

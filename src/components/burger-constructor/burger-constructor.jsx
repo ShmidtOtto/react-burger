@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import cn from 'classnames';
-import style from "./burger-constructor.module.css";
-import PropTypes from "prop-types";
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import style from './burger-constructor.module.css';
+
+import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modals/modal/modal';
-import OrderDetails from "../modals/order-details/order-details";
+import OrderDetails from '../modals/order-details/order-details';
 
 
 function BurgerConstructor({ ingredients, className }) {
-    const [ modalIsOpen, setModalIsOpen ] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const closeModal = () => setModalIsOpen(false);
     const openModal = () => setModalIsOpen(true);
@@ -17,7 +19,7 @@ function BurgerConstructor({ ingredients, className }) {
     const bottomBun = ingredients[ingredients.length - 1];
     return (
         <section className={cn(style.burger_constructor_container, className)}>
-            <Modal isOpen={modalIsOpen} close={closeModal}><OrderDetails/></Modal>
+            <Modal isOpen={modalIsOpen} close={closeModal}><OrderDetails /></Modal>
             <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px' }} className="mr-4">
                 <div className={style.burger_constructor_ingredient_container}>
                     <ConstructorElement
@@ -26,21 +28,19 @@ function BurgerConstructor({ ingredients, className }) {
                         text={topBun.name}
                         price={topBun.price}
                         thumbnail={topBun.image}
-                        key={topBun._id}
                     />
                 </div>
-                <div style={{overflowY: 'scroll', display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px', height: '620px'}} className="custom-scroll pr-4">
+                <div style={{ overflowY: 'scroll', display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px', height: '620px' }} className="custom-scroll pr-4">
                     {ingredients.map((ingredient, index) => {
-                        if (index === 0 || index === ingredients.length - 1) return (<></>)
+                        if (index === 0 || index === ingredients.length - 1) return (<div key={ingredient._id}></div>)
                         return (
-                            <div className={style.burger_constructor_ingredient_container}>
+                            <div className={style.burger_constructor_ingredient_container} key={ingredient._id}>
                                 <div className="mr-2"><DragIcon type="primary" /></div>
                                 <ConstructorElement
                                     isLocked={false}
                                     text={ingredient.name}
                                     price={ingredient.price}
                                     thumbnail={ingredient.image}
-                                    key={ingredient._id}
                                 />
                             </div>
                         )
@@ -53,7 +53,6 @@ function BurgerConstructor({ ingredients, className }) {
                         text={bottomBun.name}
                         price={bottomBun.price}
                         thumbnail={bottomBun.image}
-                        key={bottomBun._id}
                     />
                 </div>
             </div>
@@ -71,7 +70,8 @@ function BurgerConstructor({ ingredients, className }) {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.array.isRequired
+    ingredients: PropTypes.array.isRequired,
+    className: PropTypes.string
 }
 
 export default BurgerConstructor;

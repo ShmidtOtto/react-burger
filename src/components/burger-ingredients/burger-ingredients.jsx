@@ -1,10 +1,12 @@
-import { useState } from "react";
-import ingredientsTranslate from "../../utils/ingredients-translate";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import cn from 'classnames';
 import style from './burger-ingredients.module.css';
-import PropTypes from "prop-types";
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerIngredientCategory from "./burger-ingredient-category/burger-ingredient-category";
+
+import ingredientsTranslate from '../../utils/ingredients-translate';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import BurgerIngredientCategory from './burger-ingredient-category/burger-ingredient-category';
 
 function BurgerIngredients({ ingredients, className }) {
     const [current, setCurrentTab] = useState('Булки');
@@ -32,21 +34,25 @@ function BurgerIngredients({ ingredients, className }) {
                 {categories.map((category, index) => {
                     return (
                         <BurgerIngredientCategory
-                            categoryName={ingredientsTranslate[category]} 
-                            key={index} 
+                            categoryName={ingredientsTranslate[category]}
+                            key={index}
                             ingredients={ingredients.filter(ingredient => ingredient.type === category)}
 
                         />
                     )
                 })}
             </div>
-
         </section>
     );
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.array.isRequired
+    ingredients: PropTypes.array.isRequired,
+    className: PropTypes.string
+}
+
+BurgerIngredients.defaultProps = {
+    ingredients: []
 }
 
 export default BurgerIngredients;
