@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import style from './ingredient-details.module.css';
 
-function Details({ title, value, className }) {
+function Details({ title = '', value = 0, className = '' }) {
     className = className ? className : '';
     return (
         <div className={`${style.ingredient_detail} ${className}`}>
@@ -19,7 +19,7 @@ Details.propTypes = {
     className: PropTypes.string
 }
 
-function IngredientDetails({ image, name, proteins, fat, carbohydrates, calories, className }) {
+function IngredientDetails({ image = '', name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '' }) {
     return (
         <div className={cn(style.ingredient_details_container, className)}>
             <img src={image} alt={name} className={`${style.ingredient_details_container_img} mb-4`} />
@@ -42,15 +42,6 @@ IngredientDetails.propTypes = {
     carbohydrates: PropTypes.number.isRequired,
     calories: PropTypes.number.isRequired,
     className: PropTypes.string
-}
-
-IngredientDetails.defaultProps = {
-    image: '',
-    name: '',
-    proteins: 0,
-    fat: 0,
-    carbohydrates: 0,
-    calories: 0
 }
 
 export default IngredientDetails;

@@ -5,7 +5,7 @@ import style from './burger-ingredient-category.module.css';
 
 import BurgerIngredientCart from '../burger-ingredients-cart/burger-ingredients-cart';
 
-function BurgerIngredientCategory({ categoryName, ingredients, className }) {
+function BurgerIngredientCategory({ categoryName = '', ingredients = [], className = ''}) {
     return (
         <div className={cn(style.burger_ingridients_categorys_container, className)}>
             <h4 className="text text_type_main-medium mb-6">{categoryName}</h4>
@@ -24,13 +24,16 @@ function BurgerIngredientCategory({ categoryName, ingredients, className }) {
 
 BurgerIngredientCategory.propTypes = {
     categoryName: PropTypes.string.isRequired,
-    ingredients: PropTypes.array.isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+    })).isRequired,
     className: PropTypes.string
-}
-
-BurgerIngredientCategory.defaultProps = {
-    categoryName: '',
-    ingredients: []
 }
 
 export default BurgerIngredientCategory;

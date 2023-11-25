@@ -8,7 +8,7 @@ import ingredientsTranslate from '../../utils/ingredients-translate';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientCategory from './burger-ingredient-category/burger-ingredient-category';
 
-function BurgerIngredients({ ingredients, className }) {
+function BurgerIngredients({ ingredients = [], className = '' }) {
     const [current, setCurrentTab] = useState('Булки');
 
     let categories = [];
@@ -19,7 +19,7 @@ function BurgerIngredients({ ingredients, className }) {
     return (
         <section className={cn(style.burger_ingredients_container, className)}>
             <h3 className="text text_type_main-medium pb-5 ">Соберите бургер</h3>
-            <div style={{ display: 'flex' }} className="pb-10">
+            <div className={cn(style.burger_ingredients_tab, "pb-10")}>
                 <Tab value="Булки" active={current === 'Булки'} onClick={() => setCurrentTab('Булки')}>
                     Булки
                 </Tab>
@@ -30,7 +30,7 @@ function BurgerIngredients({ ingredients, className }) {
                     Начинки
                 </Tab>
             </div>
-            <div style={{ overflowY: 'scroll', height: '600px' }} className="custom-scroll">
+            <div className={cn(style.burger_ingredients_scroll_container, "custom-scroll")}>
                 {categories.map((category, index) => {
                     return (
                         <BurgerIngredientCategory
@@ -47,12 +47,16 @@ function BurgerIngredients({ ingredients, className }) {
 }
 
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.array.isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+    })).isRequired,
     className: PropTypes.string
-}
-
-BurgerIngredients.defaultProps = {
-    ingredients: []
 }
 
 export default BurgerIngredients;

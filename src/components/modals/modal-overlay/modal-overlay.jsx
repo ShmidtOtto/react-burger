@@ -3,19 +3,14 @@ import PropTypes from 'prop-types';
 import cn from 'classnames';
 import style from './modal-overlay.module.css';
 
-function ModalOverlay({ onClose, children }) {
+function ModalOverlay({ onClose }) {
     return (
-        <div className={cn(style.modal_overlay_container)} onClick={onClose}>
-            <div onClick={(e) => e.stopPropagation()}>
-                {children}
-            </div>
-        </div>
+        <div className={cn(style.modal_overlay_container)} onClick={onClose}></div>
     )
 }
 
 ModalOverlay.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired
+    onClose: PropTypes.func.isRequired
 }
 
 export default ModalOverlay;

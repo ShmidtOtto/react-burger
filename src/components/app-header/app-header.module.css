@@ -1,3 +1,6 @@
+.header {
+    width: 100%;
+}
 .header_container {
     display: flex;
     justify-content: space-around;

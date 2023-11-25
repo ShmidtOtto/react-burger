@@ -9,7 +9,7 @@ import Modal from '../modals/modal/modal';
 import OrderDetails from '../modals/order-details/order-details';
 
 
-function BurgerConstructor({ ingredients, className }) {
+function BurgerConstructor({ ingredients = [], className = '' }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const closeModal = () => setModalIsOpen(false);
@@ -20,7 +20,7 @@ function BurgerConstructor({ ingredients, className }) {
     return (
         <section className={cn(style.burger_constructor_container, className)}>
             <Modal isOpen={modalIsOpen} close={closeModal}><OrderDetails /></Modal>
-            <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px' }} className="mr-4">
+            <div className={cn(style.burger_constructor_ingredients_container, "mr-4")}>
                 <div className={style.burger_constructor_ingredient_container}>
                     <ConstructorElement
                         type={'top'}
@@ -30,7 +30,7 @@ function BurgerConstructor({ ingredients, className }) {
                         thumbnail={topBun.image}
                     />
                 </div>
-                <div style={{ overflowY: 'scroll', display: 'flex', justifyContent: 'center', flexDirection: 'column', gap: '10px', height: '620px' }} className="custom-scroll pr-4">
+                <div className={cn(style.burger_constructor_ingredients_scroll_container, "custom-scroll", "pr-4")}>
                     {ingredients.map((ingredient, index) => {
                         if (index === 0 || index === ingredients.length - 1) return (<div key={ingredient._id}></div>)
                         return (
@@ -70,7 +70,15 @@ function BurgerConstructor({ ingredients, className }) {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.array.isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+    })).isRequired,
     className: PropTypes.string
 }
 

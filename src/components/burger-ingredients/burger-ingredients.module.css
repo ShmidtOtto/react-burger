@@ -5,6 +5,15 @@
     align-items: center;
 }
 
+.burger_ingredients_tab {
+    display: flex;
+}
+
+.burger_ingredients_scroll_container {
+    overflow-y: scroll;
+    height: 600px;
+}
+
 .burger_ingredients_category {
     display: flex;
     flex-direction: row;

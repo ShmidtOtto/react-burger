@@ -21,19 +21,22 @@ function Modal({ modatlTitle, isOpen, close, children, className }) {
     if (!isOpen) return null;
 
     return createPortal(
-        <ModalOverlay onClose={close}>
+        <>
+            <ModalOverlay onClose={close}/>
             <div className={cn(style.modal_container, className)}>
-                <div className={cn(style.modal_header, 'pl-10', 'pt-10', 'pr-10')}>
-                    <h2 className='text text_type_main-large'>{modatlTitle}</h2>
-                    <div className={style.modal_icon_close}>
-                        <CloseIcon type="primary" onClick={close} />
+                <div className={style.modal_wrapper}>
+                    <div className={cn(style.modal_header, 'pl-10', 'pt-10', 'pr-10')}>
+                        <h2 className='text text_type_main-large'>{modatlTitle}</h2>
+                        <div className={style.modal_icon_close}>
+                            <CloseIcon type="primary" onClick={close}/>
+                        </div>
+                    </div>
+                    <div className={`${style.modal_content} pl-10 pr-10`}>
+                        {children}
                     </div>
                 </div>
-                <div className={`${style.modal_content} pl-10 pr-10`}>
-                    {children}
-                </div>
             </div>
-        </ModalOverlay>
+        </>
         , modalContainer
     )
 }

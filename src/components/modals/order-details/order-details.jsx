@@ -15,9 +15,9 @@ function OrderDetails({ className }) {
             <h2 className={cn('text', 'text_type_digits-large', 'mt-20')}>034536</h2>
             <p className={cn('text', 'text_type_main-medium', 'mt-8')}>идентификатор заказа</p>
             <div className={cn(style.ok_container, 'mt-15')}>
-                <img src={frame} alt="" className={style.frame} />
-                <img src={frame2} alt="" className={style.frame} />
-                <img src={frame3} alt="" className={style.frame} />
+                <img src={frame} alt="order ok frame" className={style.frame} />
+                <img src={frame2} alt="order ok frame" className={style.frame} />
+                <img src={frame3} alt="order ok frame" className={style.frame} />
                 <div className={style.frame}>
                     <CheckMarkIcon type="primary" />
                 </div>

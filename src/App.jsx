@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
 import cn from 'classnames';
 import style from './App.module.css';
@@ -7,15 +8,17 @@ import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 
-function App() {
-  const ingridientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
+function App({ingridientsUrl}) {
 
   const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
     const getIngridients = () => {
       fetch(ingridientsUrl)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) throw new Error('Network response was not ok: status is ' + response.status);
+          return response.json();
+        })
         .then((data) => {
           setIngredients(data.data);
         }).catch((error) => {
@@ -40,6 +43,10 @@ function App() {
       </main>
     </div>
   );
+}
+
+App.propTypes = {
+  ingridientsUrl: PropTypes.string.isRequired
 }
 
 export default App;
