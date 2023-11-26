@@ -1,0 +1,18 @@
+.header {
+    width: 100%;
+}
+.header_container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    background-color: #1C1C21;
+}
+
+.header_container_navigation {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: space-between;
+}

@@ -1,0 +1,43 @@
+.burger_constructor_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger_constructor_ingredients_container { 
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px
+}
+
+.burger_constructor_ingredients_scroll_container {
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    height: 620px
+}
+
+.burger_constructor_ingredient_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.burger_constructor_order_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.burger_constructor_order_container_price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
