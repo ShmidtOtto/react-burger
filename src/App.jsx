@@ -8,6 +8,8 @@ import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 
+import { IngredientsContext } from './services/ingredientsContext';
+
 function App({ingridientsUrl}) {
 
   const [ingredients, setIngredients] = useState([]);
@@ -37,7 +39,9 @@ function App({ingridientsUrl}) {
         {ingredients.length !== 0 && (
           <>
             <BurgerIngredients className='mr-10 mt-10' ingredients={ingredients} />
-            <BurgerConstructor className='mt-25' ingredients={ingredients} />
+            <IngredientsContext.Provider value={{ingredients}}>
+              <BurgerConstructor className='mt-25'/>
+            </IngredientsContext.Provider>
           </>
         )}
       </main>
