@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import style from './empty-constructor-element.module.css';
 import cn from 'classnames';
 
@@ -9,3 +10,7 @@ export const EmptyConstructorElement = ({ type }) => {
         </div>
     );
 };
+
+EmptyConstructorElement.propTypes = {
+    type: PropTypes.string
+}

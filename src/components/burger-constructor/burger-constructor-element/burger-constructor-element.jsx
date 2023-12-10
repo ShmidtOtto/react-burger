@@ -1,12 +1,15 @@
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
+
 import { useDispatch } from 'react-redux';
+
 import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor-element.module.css';
 
 import { removeIngredient, moveIngredients, addIngredient } from '../../../services/reducers/constructorIngredientsReducer';
 
-function BurgerCounstructorElement({ ingredient }) {
+function BurgerCounstructorElement({ ingredient = {} }) {
     const ref = useRef(null);
     const dispatch = useDispatch();
     const [{ isDragging }, dragRef] = useDrag(() => ({
@@ -54,4 +57,16 @@ function BurgerCounstructorElement({ ingredient }) {
     )
 }
 
+BurgerCounstructorElement.propTypes = {
+    ingredient: PropTypes.objectOf(PropTypes.shape({
+        image: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+        uuid: PropTypes.string.isRequired
+    })).isRequired,
+}
 export default BurgerCounstructorElement;
