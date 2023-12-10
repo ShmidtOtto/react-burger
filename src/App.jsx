@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux'; 
 import PropTypes from 'prop-types';
 
 import cn from 'classnames';
@@ -8,41 +9,29 @@ import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 
-import { IngredientsContext } from './services/ingredientsContext';
+import { useDispatch } from 'react-redux';
+import { getIngridients } from './services/reducers/ingredientsReducer';
 
-function App({ingridientsUrl}) {
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-  const [ingredients, setIngredients] = useState([]);
+function App({ ingridientsUrl }) {
+  const dispatch = useDispatch();
+  const { ingredients } = useSelector(state => state.ingredients);
 
   useEffect(() => {
-    const getIngridients = () => {
-      fetch(ingridientsUrl)
-        .then((response) => {
-          if (!response.ok) throw new Error('Network response was not ok: status is ' + response.status);
-          return response.json();
-        })
-        .then((data) => {
-          setIngredients(data.data);
-        }).catch((error) => {
-          console.log(error);
-          alert('Возникла ошибка при получении списка ингридиентов. Пожалуйста обратитесь к администратору сайта');
-        });
-    }
-
-    getIngridients();
-  }, [])
+    dispatch(getIngridients(ingridientsUrl));
+  }, [ingridientsUrl, dispatch]);
 
   return (
     <div className={cn(style.app_container, 'mr-10', 'ml-10')}>
       <AppHeader className='mt-10 mr-10 ml-10' />
       <main className={style.app_container_content}>
         {ingredients.length !== 0 && (
-          <>
-            <BurgerIngredients className='mr-10 mt-10' ingredients={ingredients} />
-            <IngredientsContext.Provider value={{ingredients}}>
-              <BurgerConstructor className='mt-25'/>
-            </IngredientsContext.Provider>
-          </>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients className='mr-10 mt-10'/>
+            <BurgerConstructor className='mt-25' />
+          </DndProvider>
         )}
       </main>
     </div>
