@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getIngridients = createAsyncThunk(
-    'ingredients/getIngridients',
-    async ingridientsUrl => {
-        const response = await fetch(ingridientsUrl);
+export const getIngredients = createAsyncThunk(
+    'ingredients/getIngredients',
+    async ingredientsUrl => {
+        const response = await fetch(ingredientsUrl);
+        if (!response.ok) throw new Error('Network response was not ok: status is ' + response.status);
         const data = await response.json();
         return data.data;
     }
@@ -21,7 +22,7 @@ const ingredientsReducer = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(getIngridients.fulfilled, (state, action) => {
+        .addCase(getIngredients.fulfilled, (state, action) => {
             state.ingredients = action.payload;
             state.ingredientsRequest = false;
             state.ingredientsRrror = false;
@@ -29,10 +30,10 @@ const ingredientsReducer = createSlice({
             action.payload.forEach(ingredient => {
                 if (!state.ingredientsCategories.includes(ingredient.type)) state.ingredientsCategories.push(ingredient.type);
             });
-        }).addCase(getIngridients.rejected, (state) => {
+        }).addCase(getIngredients.rejected, (state) => {
             state.ingredientsRequest = false;
             state.ingredientsRrror = true;
-        }).addCase(getIngridients.pending, (state) => {
+        }).addCase(getIngredients.pending, (state) => {
             state.ingredientsRequest = true;
             state.ingredientsRrror = false;
         })

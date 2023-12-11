@@ -27,7 +27,6 @@ function BurgerConstructor({ className = '' }) {
     const [, dropIngredientRef] = useDrop(() => ({
         accept: 'ingredient',
         drop(ingredient) {
-            console.log('drop');
             dispatch(addIngredient(ingredient));
         }
     }));
@@ -62,8 +61,15 @@ function BurgerConstructor({ className = '' }) {
                 <div className={cn(style.burger_constructor_ingredients_scroll_container, "custom-scroll", "pr-4")}>
                     {
                         !constructorIngredients.length ? 
-                        <div ref={dropIngredientRef}><EmptyConstructorElement/></div> : 
-                        constructorIngredients.map(ingredient => <div key={ingredient.uuid}><BurgerCounstructorElement ingredient={ingredient}/></div>)
+                        <div ref={dropIngredientRef}>
+                            <EmptyConstructorElement/>
+                        </div> : constructorIngredients.map(ingredient => {
+                            return (
+                                <div key={ingredient.uuid}>
+                                    <BurgerCounstructorElement ingredient={ingredient}/>
+                                </div>
+                                )
+                            })
                     }
                 </div>
                 <div className={style.burger_constructor_ingredient_container} ref={dropBottomBunRef}>

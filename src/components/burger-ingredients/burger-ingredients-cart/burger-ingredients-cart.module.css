@@ -1,4 +1,4 @@
-.burger_ingridients_category_item {
+.burger_ingredients_category_item {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,17 +6,17 @@
     cursor: pointer;
 }
 
-.burger_ingridients_category_img {
+.burger_ingredients_category_img {
     width: 240px;
 }
 
-.burger_ingridients_category_price_container {
+.burger_ingredients_category_price_container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.burger_ingridients_category_count_coutainer {
+.burger_ingredients_category_count_coutainer {
     position: relative;
 }

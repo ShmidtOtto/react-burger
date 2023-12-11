@@ -46,15 +46,15 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
             <Modal
                 isOpen={modalIsOpen}
                 close={closeModal}
-                modatlTitle="Детали ингредиента">
+                modalTitle="Детали ингредиента">
                     <IngredientDetails />
             </Modal>
-            <div className={cn(style.burger_ingridients_category_item, style.burger_ingridients_category_count_coutainer)}
+            <div className={cn(style.burger_ingredients_category_item, style.burger_ingredients_category_count_coutainer)}
                 ref={dragRef}
                 onClick={() => openModal({ image, name, proteins, fat, carbohydrates, calories })}>
                 <Counter count={count} size="small" extraClass='m-1'/>
                 <img src={image} alt={name} className="pl-4 pr-4 pb-1" />
-                <div className={`${style.burger_ingridients_category_price_container} pb-1`}>
+                <div className={`${style.burger_ingredients_category_price_container} pb-1`}>
                     <p className='text text_type_digits-default pr-1'>{price}</p>
                     <CurrencyIcon type="primary" />
                 </div>

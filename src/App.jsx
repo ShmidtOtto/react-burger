@@ -10,18 +10,22 @@ import BurgerConstructor from './components/burger-constructor/burger-constructo
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 
 import { useDispatch } from 'react-redux';
-import { getIngridients } from './services/reducers/ingredientsReducer';
+import { getIngredients } from './services/reducers/ingredientsReducer';
 
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-function App({ ingridientsUrl }) {
+function App({ ingredientsUrl }) {
   const dispatch = useDispatch();
-  const { ingredients } = useSelector(state => state.ingredients);
+  const { ingredients, ingredientsRrror } = useSelector(state => state.ingredients);
 
   useEffect(() => {
-    dispatch(getIngridients(ingridientsUrl));
-  }, [ingridientsUrl, dispatch]);
+    dispatch(getIngredients(ingredientsUrl));
+  }, [ingredientsUrl, dispatch]);
+
+  if (ingredientsRrror) {
+    alert('Произошла ошибка при загрузке данных. Пожалуйста, обратитесь в техническую поддержку.');
+  }
 
   return (
     <div className={cn(style.app_container, 'mr-10', 'ml-10')}>
@@ -39,7 +43,7 @@ function App({ ingridientsUrl }) {
 }
 
 App.propTypes = {
-  ingridientsUrl: PropTypes.string.isRequired
+  ingredientsUrl: PropTypes.string.isRequired
 }
 
 export default App;
