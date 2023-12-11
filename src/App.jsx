@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux'; 
 import PropTypes from 'prop-types';
 
 import cn from 'classnames';
@@ -8,37 +9,33 @@ import AppHeader from './components/app-header/app-header';
 import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
 
-function App({ingridientsUrl}) {
+import { useDispatch } from 'react-redux';
+import { getIngredients } from './services/reducers/ingredientsReducer';
 
-  const [ingredients, setIngredients] = useState([]);
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+function App({ ingredientsUrl }) {
+  const dispatch = useDispatch();
+  const { ingredients, ingredientsRrror } = useSelector(state => state.ingredients);
 
   useEffect(() => {
-    const getIngridients = () => {
-      fetch(ingridientsUrl)
-        .then((response) => {
-          if (!response.ok) throw new Error('Network response was not ok: status is ' + response.status);
-          return response.json();
-        })
-        .then((data) => {
-          setIngredients(data.data);
-        }).catch((error) => {
-          console.log(error);
-          alert('Возникла ошибка при получении списка ингридиентов. Пожалуйста обратитесь к администратору сайта');
-        });
-    }
+    dispatch(getIngredients(ingredientsUrl));
+  }, [ingredientsUrl, dispatch]);
 
-    getIngridients();
-  }, [])
+  if (ingredientsRrror) {
+    alert('Произошла ошибка при загрузке данных. Пожалуйста, обратитесь в техническую поддержку.');
+  }
 
   return (
     <div className={cn(style.app_container, 'mr-10', 'ml-10')}>
       <AppHeader className='mt-10 mr-10 ml-10' />
       <main className={style.app_container_content}>
         {ingredients.length !== 0 && (
-          <>
-            <BurgerIngredients className='mr-10 mt-10' ingredients={ingredients} />
-            <BurgerConstructor className='mt-25' ingredients={ingredients} />
-          </>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngredients className='mr-10 mt-10'/>
+            <BurgerConstructor className='mt-25' />
+          </DndProvider>
         )}
       </main>
     </div>
@@ -46,7 +43,7 @@ function App({ingridientsUrl}) {
 }
 
 App.propTypes = {
-  ingridientsUrl: PropTypes.string.isRequired
+  ingredientsUrl: PropTypes.string.isRequired
 }
 
 export default App;

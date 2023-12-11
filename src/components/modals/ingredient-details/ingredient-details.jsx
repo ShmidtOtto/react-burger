@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import cn from 'classnames';
@@ -19,7 +20,9 @@ Details.propTypes = {
     className: PropTypes.string
 }
 
-function IngredientDetails({ image = '', name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '' }) {
+function IngredientDetails() {
+
+    const { image, name, proteins, fat, carbohydrates, calories, className} = useSelector(state => state.ingredientDetails);
     return (
         <div className={cn(style.ingredient_details_container, className)}>
             <img src={image} alt={name} className={`${style.ingredient_details_container_img} mb-4`} />
@@ -32,16 +35,6 @@ function IngredientDetails({ image = '', name = '', proteins = 0, fat = 0, carbo
             </div>
         </div>
     )
-}
-
-IngredientDetails.propTypes = {
-    image: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    className: PropTypes.string
 }
 
 export default IngredientDetails;

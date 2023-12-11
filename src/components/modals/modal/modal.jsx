@@ -9,7 +9,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 const modalContainer = document.querySelector('#modals');
 
-function Modal({ modatlTitle, isOpen, close, children, className }) {
+function Modal({ modalTitle, isOpen, close, children, className }) {
     useEffect(() => {
         if (isOpen) {
             const listen = (e) => e.key === 'Escape' && close();
@@ -26,7 +26,7 @@ function Modal({ modatlTitle, isOpen, close, children, className }) {
             <div className={cn(style.modal_container, className)}>
                 <div className={style.modal_wrapper}>
                     <div className={cn(style.modal_header, 'pl-10', 'pt-10', 'pr-10')}>
-                        <h2 className='text text_type_main-large'>{modatlTitle}</h2>
+                        <h2 className='text text_type_main-large'>{modalTitle}</h2>
                         <div className={style.modal_icon_close}>
                             <CloseIcon type="primary" onClick={close}/>
                         </div>
@@ -42,7 +42,7 @@ function Modal({ modatlTitle, isOpen, close, children, className }) {
 }
 
 Modal.propTypes = {
-    modatlTitle: PropTypes.string,
+    modalTitle: PropTypes.string,
     isOpen: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
