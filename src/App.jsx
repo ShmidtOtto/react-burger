@@ -3,16 +3,20 @@ import { useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Login, Home, Register, ForgotPassword, ResetPassword, Profile, ProfileOrders, Ingredient, NotFound } from './pages';
+import IngredientDetails from './components/modals/ingredient-details/ingredient-details';
 import { OnlyAuth, OnlyUnAuth } from './components/protected-route';
 import { MainLayout, ProfileLayout } from './layouts';
 
 import { checkUserAuth } from './services/reducers/userReducer';
+import Modal from './components/modals/modal/modal';
 
 function App({ ingredientsUrl }) {
   const location = useLocation();
   const from = location.state && location.state.from;
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -20,9 +24,13 @@ function App({ ingredientsUrl }) {
     dispatch(checkUserAuth());
   }, [dispatch]);
 
+  const closeIngredientModal = () => {
+    navigate(-1)
+  }
+
   return (
     <>
-      <Routes location={location}>
+      <Routes location={from || location}>
         <Route path='/' element={<MainLayout />}>
           <Route index element={<Home ingredientsUrl={ingredientsUrl} />} />
           <Route path='/ingredients/:id' element={<Ingredient ingredientsUrl={ingredientsUrl} />} />
@@ -37,6 +45,12 @@ function App({ ingredientsUrl }) {
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
+
+      {from && (
+        <Routes>
+          <Route path='/ingredients/:id' element={<Modal modalTitle="Детали ингредиента" close={closeIngredientModal}><IngredientDetails /></Modal>} />
+        </Routes>
+      )}
     </>
   );
 }

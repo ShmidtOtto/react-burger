@@ -28,7 +28,8 @@ export default function ForgotPassword() {
         e.preventDefault();
         try {
             await userApi.forgotPassword(forgotFormData.email);
-            navigate('/reset-password', { state: { from: '/forgot-password' } });
+            debugger;
+            navigate('/reset-password', { state: { where: '/forgot-password' } });
         } catch (err) {
             toast.error(err.message, {
                 position: "bottom-center",

@@ -22,8 +22,9 @@ export default function ResetPassword() {
     const [isSubmitin, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        const from = location.state && location.state.from;
-        if (!from || from !== '/forgot-password') {
+        debugger;
+        const where = location.state && location.state.where;
+        if (!where || where !== '/forgot-password') {
             navigate('/forgot-password');
         }
     }, [location, navigate])

@@ -25,13 +25,16 @@ function BurgerConstructor({ className = '' }) {
     const { totalPrice, buns: [topBun, bottomBun], constructorIngredients } = useSelector(state => state.constructorIngredients);
     const { user } = useSelector(state => state.user);
 
-    const closeModal = () => setModalIsOpen(false);
     const openModal = () => {
         if (!user) {
-            navigate('/login', { state: { from: '/' } });
+            navigate('/login');
         } else {
             setModalIsOpen(true);
         }
+    }
+
+    const closeModal = () => {
+        setModalIsOpen(false);
     }
 
     const [, dropIngredientRef] = useDrop(() => ({
@@ -57,7 +60,7 @@ function BurgerConstructor({ className = '' }) {
 
     return (
         <section className={cn(style.burger_constructor_container, className)}>
-            <Modal isOpen={modalIsOpen} close={closeModal}><OrderDetails/></Modal>
+            { modalIsOpen && <Modal close={closeModal}><OrderDetails/></Modal>}
             <div className={cn(style.burger_constructor_ingredients_container, "mr-4")}>
                 <div className={style.burger_constructor_ingredient_container} ref={dropTopBunRef}>
                     { topBun ? <ConstructorElement

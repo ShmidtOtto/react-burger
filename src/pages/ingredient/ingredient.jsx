@@ -18,7 +18,7 @@ export default function Ingredient ({ ingredientsUrl }) {
         } else {
             dispatch(getIngredients(ingredientsUrl));
         }
-    }, [ingredientsUrl, ingredients]);
+    }, [ingredientsUrl, ingredients, id, dispatch]);
 
     return (
         <div className='mt-30'>

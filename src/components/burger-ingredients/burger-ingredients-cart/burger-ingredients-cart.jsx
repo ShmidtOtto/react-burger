@@ -1,24 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, NavLink, useNavigate } from 'react-router-dom';
+import { useLocation, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import cn from 'classnames';
 import style from './burger-ingredients-cart.module.css';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../../modals/modal/modal';
-import IngredientDetails from '../../modals/ingredient-details/ingredient-details';
 
 import { useDrag } from 'react-dnd';
 
-import { addIngredient, removeIngredient } from '../../../services/reducers/ingredientDetailsReducer';
+import { addIngredient } from '../../../services/reducers/ingredientDetailsReducer';
 
 function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '', _id = '', type = '' }) {
-    const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     const { constructorIngredients, buns } = useSelector(state => state.constructorIngredients);
     const [count, setState] = useState(0);
 
@@ -35,24 +31,12 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
         item: {image, price, name, proteins, fat, carbohydrates, calories, _id, type},
     }))
 
-    const closeModal = () => {
-        setModalIsOpen(false);
-        dispatch(removeIngredient());
-        navigate(-1);
-    }
     const openModal = (ingredient) => {
-        setModalIsOpen(true);
         dispatch(addIngredient(ingredient));
     }
 
     return (
         <div className={cn(className)}>
-            <Modal
-                isOpen={modalIsOpen}
-                close={closeModal}
-                modalTitle="Детали ингредиента">
-                    <IngredientDetails />
-            </Modal>
             <NavLink 
                 to={`/ingredients/${_id}`}
                 state={{ from: location }}>

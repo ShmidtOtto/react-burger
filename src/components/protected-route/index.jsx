@@ -5,7 +5,6 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
   const user = useSelector((store) => store.user.user);
   const location = useLocation();
-  debugger;
 
   if (!isAuthChecked) {
     return null;
@@ -17,7 +16,7 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   }
 
   if (!onlyUnAuth && !user) {
-    return <Navigate to='/login' state={{ from: location }} />;
+    return <Navigate to='/login' />;
   }
 
   return component;
