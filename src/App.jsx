@@ -1,44 +1,43 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux'; 
+import { useDispatch } from 'react-redux';
+
 import PropTypes from 'prop-types';
 
-import cn from 'classnames';
-import style from './App.module.css';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Login, Home, Register, ForgotPassword, ResetPassword, Profile, ProfileOrders, Ingredient, NotFound } from './pages';
+import { OnlyAuth, OnlyUnAuth } from './components/protected-route';
+import { MainLayout, ProfileLayout } from './layouts';
 
-import AppHeader from './components/app-header/app-header';
-import BurgerConstructor from './components/burger-constructor/burger-constructor';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-
-import { useDispatch } from 'react-redux';
-import { getIngredients } from './services/reducers/ingredientsReducer';
-
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { checkUserAuth } from './services/reducers/userReducer';
 
 function App({ ingredientsUrl }) {
+  const location = useLocation();
+  const from = location.state && location.state.from;
+
   const dispatch = useDispatch();
-  const { ingredients, ingredientsRrror } = useSelector(state => state.ingredients);
 
   useEffect(() => {
-    dispatch(getIngredients(ingredientsUrl));
-  }, [ingredientsUrl, dispatch]);
-
-  if (ingredientsRrror) {
-    alert('Произошла ошибка при загрузке данных. Пожалуйста, обратитесь в техническую поддержку.');
-  }
+    dispatch(checkUserAuth());
+  }, [dispatch]);
 
   return (
-    <div className={cn(style.app_container, 'mr-10', 'ml-10')}>
-      <AppHeader className='mt-10 mr-10 ml-10' />
-      <main className={style.app_container_content}>
-        {ingredients.length !== 0 && (
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients className='mr-10 mt-10'/>
-            <BurgerConstructor className='mt-25' />
-          </DndProvider>
-        )}
-      </main>
-    </div>
+    <>
+      <Routes location={location}>
+        <Route path='/' element={<MainLayout />}>
+          <Route index element={<Home ingredientsUrl={ingredientsUrl} />} />
+          <Route path='/ingredients/:id' element={<Ingredient ingredientsUrl={ingredientsUrl} />} />
+          <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
+          <Route path='/register' element={<OnlyUnAuth component={<Register />} />} />
+          <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPassword />} />} />
+          <Route path='/reset-password' element={<OnlyUnAuth component={<ResetPassword />} />} />
+          <Route path='/profile' element={<ProfileLayout />}>
+            <Route index element={<OnlyAuth component={<Profile />} />} />
+            <Route path='/profile/orders' element={<OnlyAuth component={<ProfileOrders />} />} />
+          </Route>
+          <Route path='*' element={<NotFound />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

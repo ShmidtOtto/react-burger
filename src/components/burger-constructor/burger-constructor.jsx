@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { useNavigate } from 'react-router-dom';
+
 import cn from 'classnames';
 import style from './burger-constructor.module.css';
 
@@ -19,10 +21,18 @@ import { addIngredient, addBun } from '../../services/reducers/constructorIngred
 function BurgerConstructor({ className = '' }) {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { totalPrice, buns: [topBun, bottomBun], constructorIngredients } = useSelector(state => state.constructorIngredients);
+    const { user } = useSelector(state => state.user);
 
     const closeModal = () => setModalIsOpen(false);
-    const openModal = () => setModalIsOpen(true);
+    const openModal = () => {
+        if (!user) {
+            navigate('/login', { state: { from: '/' } });
+        } else {
+            setModalIsOpen(true);
+        }
+    }
 
     const [, dropIngredientRef] = useDrop(() => ({
         accept: 'ingredient',

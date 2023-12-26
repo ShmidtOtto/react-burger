@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'; 
 import PropTypes from 'prop-types';
 
 import cn from 'classnames';
@@ -11,11 +12,28 @@ function AppHeader({ className = '' }) {
         <header className={cn(style.header, className)}>
             <nav className={cn(style.header_container)}>
                 <div className={style.header_container_navigation}>
-                    <AppHeaderTab icon={<BurgerIcon type="primary" />} text="Конструктор" className='mr-2' />
-                    <AppHeaderTab icon={<ListIcon type="secondary" />} text="Лента заказов" />
+                    <NavLink to="/" end>
+                        {({ isActive }) => {
+                            let icon = isActive ? <BurgerIcon type="primary" /> : <BurgerIcon type="secondary" />;
+                            return <AppHeaderTab icon={icon} text="Конструктор" className='mr-2' />
+                        }}
+                    </NavLink>
+                    <NavLink to="/profile/orders" end>
+                        {({ isActive }) => {
+                            let icon = isActive ? <ListIcon type="primary" /> : <ListIcon type="secondary" />
+                            return <AppHeaderTab icon={icon} text="Лента заказов" />
+                        }}
+                    </NavLink>
                 </div>
-                <Logo />
-                <AppHeaderTab icon={<ProfileIcon type="secondary" />} text="Личный кабинет" />
+                <NavLink to="/" end>
+                    <Logo />
+                </NavLink>
+                <NavLink to="/profile" end>
+                    {({ isActive }) => {
+                        let icon = isActive ? <ProfileIcon type="primary" /> : <ProfileIcon type="secondary" />
+                        return <AppHeaderTab icon={icon} text="Личный кабинет" />
+                    }}
+                </NavLink>
             </nav>
         </header>
     );

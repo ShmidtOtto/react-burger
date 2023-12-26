@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import cn from 'classnames';
@@ -14,6 +15,8 @@ import { useDrag } from 'react-dnd';
 import { addIngredient, removeIngredient } from '../../../services/reducers/ingredientDetailsReducer';
 
 function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '', _id = '', type = '' }) {
+    const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const { constructorIngredients, buns } = useSelector(state => state.constructorIngredients);
@@ -35,6 +38,7 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
     const closeModal = () => {
         setModalIsOpen(false);
         dispatch(removeIngredient());
+        navigate(-1);
     }
     const openModal = (ingredient) => {
         setModalIsOpen(true);
@@ -49,17 +53,21 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
                 modalTitle="Детали ингредиента">
                     <IngredientDetails />
             </Modal>
-            <div className={cn(style.burger_ingredients_category_item, style.burger_ingredients_category_count_coutainer)}
-                ref={dragRef}
-                onClick={() => openModal({ image, name, proteins, fat, carbohydrates, calories })}>
-                <Counter count={count} size="small" extraClass='m-1'/>
-                <img src={image} alt={name} className="pl-4 pr-4 pb-1" />
-                <div className={`${style.burger_ingredients_category_price_container} pb-1`}>
-                    <p className='text text_type_digits-default pr-1'>{price}</p>
-                    <CurrencyIcon type="primary" />
+            <NavLink 
+                to={`/ingredients/${_id}`}
+                state={{ from: location }}>
+                <div className={cn(style.burger_ingredients_category_item, style.burger_ingredients_category_count_coutainer)}
+                    ref={dragRef}
+                    onClick={() => openModal({ image, name, proteins, fat, carbohydrates, calories })}>
+                    <Counter count={count} size="small" extraClass='m-1'/>
+                    <img src={image} alt={name} className="pl-4 pr-4 pb-1" />
+                    <div className={`${style.burger_ingredients_category_price_container} pb-1`}>
+                        <p className='text text_type_digits-default pr-1'>{price}</p>
+                        <CurrencyIcon type="primary" />
+                    </div>
+                    <p className="text text_type_main-default">{name}</p>
                 </div>
-                <p className="text text_type_main-default">{name}</p>
-            </div>
+            </NavLink>
         </div>
     );
 
