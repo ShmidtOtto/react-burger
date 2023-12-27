@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import style from './login.module.css';
 import { Link } from 'react-router-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import cn from 'classnames';
 
@@ -13,9 +12,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import { login } from '../../services/reducers/userReducer';
 
 export default function Login() {
-    const location = useLocation();
-    const navigate = useNavigate();
-
     const dispatch = useDispatch();
     const [ loginFormData, setLoginFormData ] = useState({
         email: '',
@@ -55,11 +51,7 @@ export default function Login() {
         }
         setIsSubmitting(true);
         try {
-            let { user } = await dispatch(login(loginFormData)).unwrap();
-            if (user) {
-                const from = location.state && location.state.from
-                if (from) navigate(from);
-            }
+            await dispatch(login(loginFormData)).unwrap();
         } catch (err) {
             toast.error(err.message, {
                 position: "bottom-center",

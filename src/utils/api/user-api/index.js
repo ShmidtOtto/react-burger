@@ -1,4 +1,5 @@
-import { userApiEndpoints } from './user-api-endpoints'
+import { userApiEndpoints } from './user-api-endpoints';
+
 const checkReponse = (response) => {
     return response.ok ? response.json().then(response => Promise.resolve(response)) : response.json().then((err) => Promise.reject(err));
 };
@@ -50,7 +51,7 @@ const getUser = async () => {
     }
 }
 
-const updateUser = async ({ name, email }) => {
+const updateUser = async ({ name, email, password }) => {
     try {
         return await fetchWithRefresh(userApiEndpoints.user, {
             method: 'PATCH',
@@ -62,7 +63,8 @@ const updateUser = async ({ name, email }) => {
             body: JSON.stringify({
                 authorization: localStorage.getItem('accessToken'),
                 name: name,
-                email: email
+                email: email,
+                password: password,
             })
         });
     } catch (err) {
@@ -72,7 +74,7 @@ const updateUser = async ({ name, email }) => {
 
 const register = async (email, password, name) => {
     try {
-        const { accessToken, refreshToken, user } = await fetchWithRefresh(userApiEndpoints.register, {
+        const { accessToken, refreshToken, user } = await fetch(userApiEndpoints.register, {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -91,7 +93,7 @@ const register = async (email, password, name) => {
 
 const login = async (email, password) => {
     try {
-        const response = await fetchWithRefresh(userApiEndpoints.login, {
+        const response = await fetch(userApiEndpoints.login, {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -100,15 +102,16 @@ const login = async (email, password) => {
                 password: password
             })
         });
-        return response;
+
+        return await checkReponse(response);
     } catch (err) {
-        throw new Error(err);
+        throw new Error(err.message);
     }
 }
 
 const logout = async () => {
     try {
-        await fetchWithRefresh(userApiEndpoints.logout, {
+        await fetch(userApiEndpoints.logout, {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -123,7 +126,7 @@ const logout = async () => {
 
 const forgotPassword = async (email) => {
     try {
-        return await fetchWithRefresh(userApiEndpoints.forgotPassword, {
+        return await fetch(userApiEndpoints.forgotPassword, {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },
@@ -138,7 +141,7 @@ const forgotPassword = async (email) => {
 
 const resetPassword = async (password, token) => {
     try {
-        return await fetchWithRefresh(userApiEndpoints.resetPassword, {
+        return await fetch(userApiEndpoints.resetPassword, {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json;charset=utf-8' },

@@ -7,9 +7,9 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { userApi } from '../../utils/api';
 
 export default function Profile() {
-    const [ profileData, setProfileData ] = useState({});
-    const [ initialProfileData, setInitialProfileData ] = useState({});
-    const [ isProfileDataSchange , setIsProfileDataSchange ] = useState(false);
+    const [profileData, setProfileData] = useState({});
+    const [initialProfileData, setInitialProfileData] = useState({});
+    const [isProfileDataSchange, setIsProfileDataSchange] = useState(false);
 
     useEffect(() => {
         const getUserData = async () => {
@@ -23,8 +23,12 @@ export default function Profile() {
 
     useEffect(() => {
         if (profileData) {
-            setIsProfileDataSchange(profileData.name !== initialProfileData.name || profileData.email !== initialProfileData.email);
+            setIsProfileDataSchange(
+                profileData.name !== initialProfileData.name ||
+                profileData.email !== initialProfileData.email ||
+                profileData.password !== initialProfileData.password);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileData])
 
     const setValue = (e) => {
@@ -56,7 +60,7 @@ export default function Profile() {
                     size={'default'}
                     value={profileData.name}
                     onChange={setValue}
-                    />
+                />
                 <Input
                     type={'email'}
                     placeholder={'Логин'}
@@ -65,8 +69,17 @@ export default function Profile() {
                     extraClass='mt-6'
                     value={profileData.email}
                     onChange={setValue}
-                    />
-                { isProfileDataSchange && (
+                />
+                <Input
+                    type={'password'}
+                    placeholder={'Пароль'}
+                    name='password'
+                    size={'default'}
+                    extraClass='mt-6'
+                    value={profileData.password}
+                    onChange={setValue}
+                />
+                {isProfileDataSchange && (
                     <div className={cn(style.profile_form_footer, 'mt-6')}>
                         <Button htmlType="button" type="secondary" size="large" onClick={onReset}>
                             Отменить

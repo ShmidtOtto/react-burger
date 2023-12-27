@@ -6,9 +6,10 @@ export const getOrder = createAsyncThunk(
         const response = await fetch(orderUrl, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'application/json;charset=utf-8',
+                'Authorization': localStorage.getItem('accessToken')
             },
-            body: JSON.stringify({ ingredients: ingredients })
+            body: JSON.stringify({ ingredients: ingredients.map(item => item._id) })
         });
         const data = await response.json();
         return data;

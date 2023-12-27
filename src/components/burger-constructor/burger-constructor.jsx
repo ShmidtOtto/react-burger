@@ -14,7 +14,7 @@ import OrderDetails from '../modals/order-details/order-details';
 
 import BurgerCounstructorElement from './burger-constructor-element/burger-constructor-element';
 
-import { useDrop } from 'react-dnd'; 
+import { useDrop } from 'react-dnd';
 
 import { addIngredient, addBun } from '../../services/reducers/constructorIngredientsReducer';
 
@@ -60,39 +60,39 @@ function BurgerConstructor({ className = '' }) {
 
     return (
         <section className={cn(style.burger_constructor_container, className)}>
-            { modalIsOpen && <Modal close={closeModal}><OrderDetails/></Modal>}
+            {modalIsOpen && <Modal close={closeModal}><OrderDetails /></Modal>}
             <div className={cn(style.burger_constructor_ingredients_container, "mr-4")}>
                 <div className={style.burger_constructor_ingredient_container} ref={dropTopBunRef}>
-                    { topBun ? <ConstructorElement
+                    {topBun ? <ConstructorElement
                         type={'top'}
                         isLocked={true}
                         text={topBun.name}
                         price={topBun.price}
                         thumbnail={topBun.image}
-                    /> : <EmptyConstructorElement type={'top'}/>}
+                    /> : <EmptyConstructorElement type={'top'} />}
                 </div>
                 <div className={cn(style.burger_constructor_ingredients_scroll_container, "custom-scroll", "pr-4")}>
                     {
-                        !constructorIngredients.length ? 
-                        <div ref={dropIngredientRef}>
-                            <EmptyConstructorElement/>
-                        </div> : constructorIngredients.map(ingredient => {
-                            return (
-                                <div key={ingredient.uuid}>
-                                    <BurgerCounstructorElement ingredient={ingredient}/>
-                                </div>
+                        !constructorIngredients.length ?
+                            <div ref={dropIngredientRef}>
+                                <EmptyConstructorElement />
+                            </div> : constructorIngredients.map(ingredient => {
+                                return (
+                                    <div key={ingredient.uuid}>
+                                        <BurgerCounstructorElement ingredient={ingredient} />
+                                    </div>
                                 )
                             })
                     }
                 </div>
                 <div className={style.burger_constructor_ingredient_container} ref={dropBottomBunRef}>
-                    { bottomBun ? <ConstructorElement
-                            type={'bottom'}
-                            isLocked={true}
-                            text={bottomBun.name}
-                            price={bottomBun.price}
-                            thumbnail={bottomBun.image}
-                        /> : <EmptyConstructorElement type={'bottom'}/>}
+                    {bottomBun ? <ConstructorElement
+                        type={'bottom'}
+                        isLocked={true}
+                        text={bottomBun.name}
+                        price={bottomBun.price}
+                        thumbnail={bottomBun.image}
+                    /> : <EmptyConstructorElement type={'bottom'} />}
                 </div>
             </div>
             <div className={`${style.burger_constructor_order_container} pt-10`}>

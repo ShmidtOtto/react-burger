@@ -13,26 +13,17 @@ function AppHeader({ className = '' }) {
             <nav className={cn(style.header_container)}>
                 <div className={style.header_container_navigation}>
                     <NavLink to="/" end>
-                        {({ isActive }) => {
-                            let icon = isActive ? <BurgerIcon type="primary" /> : <BurgerIcon type="secondary" />;
-                            return <AppHeaderTab icon={icon} text="Конструктор" className='mr-2' />
-                        }}
+                        {({ isActive }) => <AppHeaderTab Icon={BurgerIcon} text="Конструктор" className='mr-2' active={isActive} />}
                     </NavLink>
                     <NavLink to="/profile/orders" end>
-                        {({ isActive }) => {
-                            let icon = isActive ? <ListIcon type="primary" /> : <ListIcon type="secondary" />
-                            return <AppHeaderTab icon={icon} text="Лента заказов" />
-                        }}
+                        {({ isActive }) => <AppHeaderTab Icon={ListIcon} text="Лента заказов" active={isActive} />}
                     </NavLink>
                 </div>
                 <NavLink to="/" end>
                     <Logo />
                 </NavLink>
                 <NavLink to="/profile" end>
-                    {({ isActive }) => {
-                        let icon = isActive ? <ProfileIcon type="primary" /> : <ProfileIcon type="secondary" />
-                        return <AppHeaderTab icon={icon} text="Личный кабинет" />
-                    }}
+                    {({ isActive }) => <AppHeaderTab Icon={ProfileIcon} text="Личный кабинет" active={isActive}/>}
                 </NavLink>
             </nav>
         </header>
