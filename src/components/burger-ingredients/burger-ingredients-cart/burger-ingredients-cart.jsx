@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import cn from 'classnames';
 import style from './burger-ingredients-cart.module.css';
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import Modal from '../../modals/modal/modal';
-import IngredientDetails from '../../modals/ingredient-details/ingredient-details';
 
 import { useDrag } from 'react-dnd';
 
-import { addIngredient, removeIngredient } from '../../../services/reducers/ingredientDetailsReducer';
+import { addIngredient } from '../../../services/reducers/ingredientDetailsReducer';
 
 function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '', _id = '', type = '' }) {
+    const location = useLocation();
     const dispatch = useDispatch();
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     const { constructorIngredients, buns } = useSelector(state => state.constructorIngredients);
     const [count, setState] = useState(0);
 
@@ -32,34 +31,27 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
         item: {image, price, name, proteins, fat, carbohydrates, calories, _id, type},
     }))
 
-    const closeModal = () => {
-        setModalIsOpen(false);
-        dispatch(removeIngredient());
-    }
     const openModal = (ingredient) => {
-        setModalIsOpen(true);
         dispatch(addIngredient(ingredient));
     }
 
     return (
         <div className={cn(className)}>
-            <Modal
-                isOpen={modalIsOpen}
-                close={closeModal}
-                modalTitle="Детали ингредиента">
-                    <IngredientDetails />
-            </Modal>
-            <div className={cn(style.burger_ingredients_category_item, style.burger_ingredients_category_count_coutainer)}
-                ref={dragRef}
-                onClick={() => openModal({ image, name, proteins, fat, carbohydrates, calories })}>
-                <Counter count={count} size="small" extraClass='m-1'/>
-                <img src={image} alt={name} className="pl-4 pr-4 pb-1" />
-                <div className={`${style.burger_ingredients_category_price_container} pb-1`}>
-                    <p className='text text_type_digits-default pr-1'>{price}</p>
-                    <CurrencyIcon type="primary" />
+            <NavLink 
+                to={`/ingredients/${_id}`}
+                state={{ background: location }}>
+                <div className={cn(style.burger_ingredients_category_item, style.burger_ingredients_category_count_coutainer)}
+                    ref={dragRef}
+                    onClick={() => openModal({ image, name, proteins, fat, carbohydrates, calories })}>
+                    <Counter count={count} size="small" extraClass='m-1'/>
+                    <img src={image} alt={name} className="pl-4 pr-4 pb-1" />
+                    <div className={`${style.burger_ingredients_category_price_container} pb-1`}>
+                        <p className='text text_type_digits-default pr-1'>{price}</p>
+                        <CurrencyIcon type="primary" />
+                    </div>
+                    <p className="text text_type_main-default">{name}</p>
                 </div>
-                <p className="text text_type_main-default">{name}</p>
-            </div>
+            </NavLink>
         </div>
     );
 

@@ -21,8 +21,7 @@ Details.propTypes = {
 }
 
 function IngredientDetails() {
-
-    const { image, name, proteins, fat, carbohydrates, calories, className} = useSelector(state => state.ingredientDetails);
+    const { image, name, proteins, fat, carbohydrates, calories, className } = useSelector(state => state.ingredientDetails);
     return (
         <div className={cn(style.ingredient_details_container, className)}>
             <img src={image} alt={name} className={`${style.ingredient_details_container_img} mb-4`} />
