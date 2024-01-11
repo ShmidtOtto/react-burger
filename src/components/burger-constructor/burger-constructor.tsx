@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -18,7 +17,11 @@ import { useDrop } from 'react-dnd';
 
 import { addIngredient, addBun } from '../../services/reducers/constructorIngredientsReducer';
 
-function BurgerConstructor({ className = '' }) {
+interface IBurgerConstructor {
+    className?: string
+}
+
+const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Element => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -106,10 +109,6 @@ function BurgerConstructor({ className = '' }) {
             </div>
         </section>
     );
-}
-
-BurgerConstructor.propTypes = {
-    className: PropTypes.string
 }
 
 export default BurgerConstructor;

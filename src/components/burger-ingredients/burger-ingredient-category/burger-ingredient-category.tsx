@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
-
 import cn from 'classnames';
 import style from './burger-ingredient-category.module.css';
 
 import BurgerIngredientCart from '../burger-ingredients-cart/burger-ingredients-cart';
 
-function BurgerIngredientCategory({ categoryName = '', ingredients = [], className = '' }) {
+import { IIngredient }  from '../../../interfaces';
+
+interface IBurgerIngredientCategory {
+    categoryName: string;
+    ingredients: Array<IIngredient>;
+    className?: string;
+}
+
+const BurgerIngredientCategory: React.FC<IBurgerIngredientCategory> = ({ categoryName = '', ingredients = [], className = '' }): React.JSX.Element => {
     return (
         <div 
             className={cn(style.burger_ingredients_categorys_container, className)}>
@@ -21,20 +27,6 @@ function BurgerIngredientCategory({ categoryName = '', ingredients = [], classNa
             </div>
         </div>
     );
-}
-
-BurgerIngredientCategory.propTypes = {
-    categoryName: PropTypes.string.isRequired,
-    ingredients: PropTypes.arrayOf(PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-    })).isRequired,
-    className: PropTypes.string
 }
 
 export default BurgerIngredientCategory;

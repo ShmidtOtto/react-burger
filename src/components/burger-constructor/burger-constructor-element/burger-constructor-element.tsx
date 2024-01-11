@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import PropTypes from 'prop-types';
+import { useRef, FC } from 'react';
 
 import { useDispatch } from 'react-redux';
 
@@ -8,9 +7,14 @@ import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burg
 import style from './burger-constructor-element.module.css';
 
 import { removeIngredient, moveIngredients, addIngredient } from '../../../services/reducers/constructorIngredientsReducer';
+import { IIngredient }  from '../../../interfaces';
 
-function BurgerCounstructorElement({ ingredient = {} }) {
-    const ref = useRef(null);
+interface IBurgerCounstructorElement {
+    ingredient: IIngredient
+}
+
+const BurgerCounstructorElement: FC<IBurgerCounstructorElement> = ({ ingredient }): JSX.Element => {
+    const ref = useRef<HTMLDivElement>(null);
     const dispatch = useDispatch();
     const [{ isDragging }, dragRef] = useDrag(() => ({
         type: 'ingredient',
@@ -22,18 +26,19 @@ function BurgerCounstructorElement({ ingredient = {} }) {
 
     const [, dropRef] = useDrop(() => ({
         accept: 'ingredient',
-        drop(ingredient) {
+        drop(ingredient: IIngredient) {
             if (!ingredient.uuid) dispatch(addIngredient(ingredient));
         },
         hover(item, monitor) {
             if (!ref.current) return;
             const dragIndex = item.uuid;
-            if (!dragIndex) return; 
+            if (!dragIndex) return;
             const hoverIndex = ingredient.uuid;
             if (dragIndex === hoverIndex) return
             const hoverBoundingRect = ref.current?.getBoundingClientRect()
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset = monitor.getClientOffset()
+            const clientOffset = monitor.getClientOffset();
+            if (clientOffset === null) return; 
             const hoverClientY = clientOffset.y - hoverBoundingRect.top
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
@@ -57,16 +62,4 @@ function BurgerCounstructorElement({ ingredient = {} }) {
     )
 }
 
-BurgerCounstructorElement.propTypes = {
-    ingredient: PropTypes.objectOf(PropTypes.shape({
-        image: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        uuid: PropTypes.string.isRequired
-    })).isRequired,
-}
 export default BurgerCounstructorElement;

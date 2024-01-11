@@ -8,7 +8,7 @@ import { logout } from '../../services/reducers/userReducer';
 import style from './profile-layout.module.css';
 
 
-export default function ProfileLayout() {
+export default function ProfileLayout(): JSX.Element {
     const dispatch = useDispatch();
     const onLogout = () => {
         dispatch(logout());
@@ -22,7 +22,7 @@ export default function ProfileLayout() {
                 <NavLink to="/profile/orders" className={cn('pt-4, pb-4')} end>{({isActive}) =>
                     <p className={cn(isActive ? 'text text_type_main-large' : 'text text_type_main-large text_color_inactive')}>История заказов</p>
                 }</NavLink>
-                <NavLink onClick={onLogout} className={cn('pt-4, pb-4')}>
+                <NavLink to="/" onClick={onLogout} className={cn('pt-4, pb-4')}>
                     <p className={cn('text text_type_main-large text_color_inactive')}>Выйти</p>
                 </NavLink>
             </div>

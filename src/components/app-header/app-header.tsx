@@ -1,5 +1,5 @@
+import { FC } from 'react'; 
 import { NavLink } from 'react-router-dom'; 
-import PropTypes from 'prop-types';
 
 import cn from 'classnames';
 import style from './app-header.module.css';
@@ -7,7 +7,11 @@ import style from './app-header.module.css';
 import AppHeaderTab from './app-header-tab/app-header-tab';
 import { BurgerIcon, Logo, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-function AppHeader({ className = '' }) {
+interface IAppHeader {
+    className?: string;
+}
+
+const AppHeader: FC<IAppHeader> = ({ className = '' }) => {
     return (
         <header className={cn(style.header, className)}>
             <nav className={cn(style.header_container)}>
@@ -28,10 +32,6 @@ function AppHeader({ className = '' }) {
             </nav>
         </header>
     );
-}
-
-AppHeader.propTypes = {
-    className: PropTypes.string
 }
 
 export default AppHeader;
