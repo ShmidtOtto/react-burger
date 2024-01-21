@@ -12,9 +12,9 @@ export default function Ingredient (): React.JSX.Element {
     const ingredientDetails = useAppSelector(state => state.ingredientDetails);
 
     useEffect(() => {
-        if (ingredients.length) {
-            // @ts-ignore
-            dispatch(addIngredient(ingredients.find(ingredient => ingredient._id === id)));
+        const foundIngredient = ingredients.find(ingredient => ingredient._id === id);
+        if (foundIngredient) {
+            dispatch(addIngredient(foundIngredient));
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ingredients, id]);
