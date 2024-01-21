@@ -1,17 +1,16 @@
+// @ts-nocheck
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { useAppDispatch } from './hooks'
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { IUserInfo } from '@interfaces/index';
 
-import { userApi } from '../../utils/api';
+import { ILoginResponse } from '@api/user-api/index';
 
-const getUser = () => {
-    return async (dispatch) => {
-        const res = await userApi.getUser();
-        dispatch(setUser(res));
-    };
-};
+import { userApi } from '@api/';
 
 export const login = createAsyncThunk(
     'user/login',
-    async ({ email, password }) => {
+    async ({ email, password }:  { email: string; password: string; }) => {
         const res = await userApi.login(email, password);
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
@@ -21,11 +20,11 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
     'user/register',
-    async ({ email, password, name }) => {
+    async ({ email, password, name }: { email: string; password: string; name: string; }) => {
         const res = await userApi.register(email, password, name);
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
-        return res.user;
+        return res;
     }
 )
 
@@ -38,7 +37,12 @@ export const logout = createAsyncThunk(
     }
 );
 
-const initialState = {
+interface IUserState {
+    user: Pick<IUserInfo, 'email' | 'name'> | null;
+    isAuthChecked: boolean;
+}
+
+const initialState: IUserState = {
     user: null,
     isAuthChecked: false,
 }
@@ -47,24 +51,24 @@ const userReducer = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setAuthChecked: (state, action) => {
+        setAuthChecked: (state, action: PayloadAction<boolean>) => {
             state.isAuthChecked = action.payload;
         },
-        setUser: (state, action) => {
+        setUser: (state, action: PayloadAction<Pick<IUserInfo, 'email' | 'name'> | null>) => {
             state.user = action.payload;
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(login.fulfilled, (state, action) => {
-                state.user = action.payload;
+            .addCase(login.fulfilled, (state, action: PayloadAction<ILoginResponse>) => {
+                state.user = action.payload.user;
                 state.isAuthChecked = true;
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
             })
-            .addCase(register.fulfilled, (state, action) => {
-                state.user = action.payload;
+            .addCase(register.fulfilled, (state, action: PayloadAction<ILoginResponse>) => {
+                state.user = action.payload.user;
                 state.isAuthChecked = true;
             })
     }
@@ -72,6 +76,13 @@ const userReducer = createSlice({
 
 export default userReducer.reducer;
 const { setAuthChecked, setUser } = userReducer.actions;
+
+const getUser = () => {
+    return async (dispatch: typeof useAppDispatch) => {
+        const res = await userApi.getUser();
+        dispatch(setUser(res));
+    };
+};
 
 export const checkUserAuth = () => {
     return (dispatch) => {

@@ -1,5 +1,6 @@
 import { useState, FC } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '@reducers/hooks';
+import { IIngredient } from '@interfaces/index';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -15,20 +16,20 @@ import BurgerCounstructorElement from './burger-constructor-element/burger-const
 
 import { useDrop } from 'react-dnd';
 
-import { addIngredient, addBun } from '../../services/reducers/constructorIngredientsReducer';
+import { addIngredient, addBun } from '@reducers/constructorIngredientsReducer';
 
 interface IBurgerConstructor {
     className?: string
 }
 
 const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Element => {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const dispatch = useDispatch();
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { totalPrice, buns: [topBun, bottomBun], constructorIngredients } = useSelector(state => state.constructorIngredients);
-    const { user } = useSelector(state => state.user);
+    const { totalPrice, buns: [topBun, bottomBun], constructorIngredients } = useAppSelector(state => state.constructorIngredients);
+    const { user } = useAppSelector(state => state.user);
 
-    const openModal = () => {
+    const openModal = (): void => {
         if (!user) {
             navigate('/login');
         } else {
@@ -36,25 +37,25 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
         }
     }
 
-    const closeModal = () => {
+    const closeModal = (): void => {
         setModalIsOpen(false);
     }
 
-    const [, dropIngredientRef] = useDrop(() => ({
+    const [, dropIngredientRef] = useDrop<IIngredient, unknown, unknown>(() => ({
         accept: 'ingredient',
         drop(ingredient) {
             dispatch(addIngredient(ingredient));
         }
     }));
 
-    const [, dropTopBunRef] = useDrop(() => ({
+    const [, dropTopBunRef] = useDrop<IIngredient, unknown, unknown>(() => ({
         accept: 'bun',
         drop(ingredient) {
             dispatch(addBun(ingredient));
         }
     }));
 
-    const [, dropBottomBunRef] = useDrop(() => ({
+    const [, dropBottomBunRef] = useDrop<IIngredient, unknown, unknown>(() => ({
         accept: 'bun',
         drop(ingredient) {
             dispatch(addBun(ingredient));

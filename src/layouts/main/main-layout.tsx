@@ -1,9 +1,10 @@
 import { Outlet } from 'react-router-dom';
 import cn from 'classnames';
 import style from './main-layout.module.css';
-import AppHeader from '../../components/app-header/app-header';
+import AppHeader from '@components/app-header/app-header';
+import React from 'react';
 
-export default function MainLayout(): JSX.Element {
+export default function MainLayout(): React.JSX.Element {
     return (
         <div className={cn(style.app_container, 'mr-10', 'ml-10')}>
             <AppHeader className='mt-10 mr-10 ml-10' />

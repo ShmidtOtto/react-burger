@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@reducers/hooks';
 import { Navigate, useLocation } from 'react-router-dom';
 
 export interface IProtected {
@@ -7,8 +7,8 @@ export interface IProtected {
 }
 
 const Protected: React.FC<IProtected> = ({ onlyUnAuth = false, component }): JSX.Element | null => {
-  const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
-  const user = useSelector((store) => store.user.user);
+  const isAuthChecked = useAppSelector((store) => store.user.isAuthChecked);
+  const user = useAppSelector((store) => store.user.user);
   const location = useLocation();
 
   if (!isAuthChecked) {

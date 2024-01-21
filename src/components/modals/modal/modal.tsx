@@ -1,20 +1,29 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 
 import cn from 'classnames';
 import style from "./modal.module.css";
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-const modalContainer = document.querySelector('#modals');
+const modalContainer: HTMLDivElement | null = document.querySelector('#modals');
 
-function Modal({ modalTitle, close, children, className }) {
+interface ModalProps {
+    modalTitle?: string;
+    close: () => void;
+    children: React.JSX.Element;
+    className?: string;
+}
+
+function Modal({ modalTitle, close, children, className }: ModalProps): React.JSX.Element {
     useEffect(() => {
-        const listen = (e) => e.key === 'Escape' && close();
+        const listen = (e: KeyboardEvent) => e.key === 'Escape' && close();
         document.addEventListener('keydown', listen);
         return () => document.removeEventListener('keydown', listen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    if (!modalContainer) return <></>;
 
     return createPortal(
         <>
@@ -35,13 +44,6 @@ function Modal({ modalTitle, close, children, className }) {
         </>
         , modalContainer
     )
-}
-
-Modal.propTypes = {
-    modalTitle: PropTypes.string,
-    close: PropTypes.func,
-    children: PropTypes.node.isRequired,
-    className: PropTypes.string
 }
 
 export default Modal;

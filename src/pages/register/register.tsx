@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState, SyntheticEvent } from 'react';
+import { useAppDispatch } from '@reducers/hooks';
 
 import style from './register.module.css'
 import { Link } from 'react-router-dom'
 
 import cn from 'classnames';
 
-import { register } from '../../services/reducers/userReducer';
+import { register } from '@reducers/userReducer';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ToastContainer, toast } from 'react-toastify';
-import Spinner from '../../components/modals/spinner/spinner';
+import Spinner from '@components/modals/spinner/spinner';
 
-export default function Register() {
-    const dispatch = useDispatch();
+export default function Register(): React.JSX.Element {
+    const dispatch = useAppDispatch();
     const [loginFormData, setLoginFormData] = useState({
         name: '',
         email: '',
@@ -21,26 +21,29 @@ export default function Register() {
     });
     const [isSubmitin, setIsSubmitting] = useState(false);
 
-    const setValue = (e) => {
-        setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
+    const setValue = (e: SyntheticEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement
+        setLoginFormData({ ...loginFormData, [target.name]: target.value });
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
             await dispatch(register(loginFormData)).unwrap();
         } catch (err) {
-            toast.error(err.message, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
+            if (err instanceof Error) {
+                toast.error(err.message, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -56,6 +59,7 @@ export default function Register() {
                             type={'text'}
                             placeholder={'Имя'}
                             name='name'
+                            value=''
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"
@@ -64,6 +68,7 @@ export default function Register() {
                             type={'email'}
                             placeholder={'E-mail'}
                             name='email'
+                            value=''
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"
@@ -72,6 +77,7 @@ export default function Register() {
                             type={'password'}
                             placeholder={'Пароль'}
                             name='password'
+                            value=''
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"

@@ -1,15 +1,15 @@
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@reducers/hooks';
 import { Outlet, NavLink } from 'react-router-dom';
 
 import cn from 'classnames';
 
-import { logout } from '../../services/reducers/userReducer';
+import { logout } from '@reducers/userReducer';
 
 import style from './profile-layout.module.css';
 
 
-export default function ProfileLayout(): JSX.Element {
-    const dispatch = useDispatch();
+export default function ProfileLayout(): React.JSX.Element {
+    const dispatch = useAppDispatch();
     const onLogout = () => {
         dispatch(logout());
     }

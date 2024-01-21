@@ -3,15 +3,15 @@ import style from './burger-ingredient-category.module.css';
 
 import BurgerIngredientCart from '../burger-ingredients-cart/burger-ingredients-cart';
 
-import { IIngredient }  from '../../../interfaces';
+import { IIngredient }  from '@interfaces/index';
 
-interface IBurgerIngredientCategory {
+interface IBurgerIngredientCategoryProps {
     categoryName: string;
     ingredients: Array<IIngredient>;
     className?: string;
 }
 
-const BurgerIngredientCategory: React.FC<IBurgerIngredientCategory> = ({ categoryName = '', ingredients = [], className = '' }): React.JSX.Element => {
+function BurgerIngredientCategory ({ categoryName = '', ingredients = [], className = '' }: IBurgerIngredientCategoryProps): React.JSX.Element {
     return (
         <div 
             className={cn(style.burger_ingredients_categorys_container, className)}>

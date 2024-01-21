@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SyntheticEvent } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import style from './reset-password.module.css'
@@ -7,11 +7,11 @@ import { Link } from 'react-router-dom'
 import cn from 'classnames'
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import Spinner from '../../components/modals/spinner/spinner';
+import Spinner from '@components/modals/spinner/spinner';
 import { ToastContainer, toast } from 'react-toastify';
-import { userApi } from '../../utils/api';
+import { userApi } from '@api/index';
 
-export default function ResetPassword() {
+export default function ResetPassword(): React.JSX.Element {
     const navigate = useNavigate();
     const location = useLocation();
     const [resetFormData, setResetFormData] = useState({
@@ -28,27 +28,30 @@ export default function ResetPassword() {
         }
     }, [location, navigate])
 
-    const setValue = (e) => {
-        setResetFormData({ ...resetFormData, [e.target.name]: e.target.value });
+    const setValue = (e: SyntheticEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement
+        setResetFormData({ ...resetFormData, [target.name]: target.value });
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         setIsSubmitting(true)
         e.preventDefault();
         try {
             let { success } = await userApi.resetPassword(resetFormData.password, resetFormData.token);
             if (success) navigate('/login');
         } catch (err) {
-            toast.error(err.message, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
+            if (err instanceof Error) {
+                toast.error(err.message, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -64,6 +67,7 @@ export default function ResetPassword() {
                             type={'password'}
                             placeholder={'Введите новый пароль'}
                             name={'password'}
+                            value=''
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"
@@ -73,6 +77,7 @@ export default function ResetPassword() {
                             type={'text'}
                             placeholder={'Введите код из письма'}
                             name={'token'}
+                            value=''
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '@reducers/hooks';
 import { useLocation, NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import cn from 'classnames';
 import style from './burger-ingredients-cart.module.css';
@@ -10,13 +9,18 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 
 import { useDrag } from 'react-dnd';
 
-import { addIngredient } from '../../../services/reducers/ingredientDetailsReducer';
+import { addIngredient } from '@reducers/ingredientDetailsReducer';
 
-function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '', _id = '', type = '' }) {
+import { IIngredient } from '@interfaces/index';
+interface IBurgerIngredientCartProps extends IIngredient {
+    className?: string;
+}
+
+function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '', _id = '', type = '' }: IBurgerIngredientCartProps): React.JSX.Element {
     const location = useLocation();
-    const dispatch = useDispatch();
-    const { constructorIngredients, buns } = useSelector(state => state.constructorIngredients);
-    const [count, setState] = useState(0);
+    const dispatch = useAppDispatch();
+    const { constructorIngredients, buns } = useAppSelector(state => state.constructorIngredients);
+    const [count, setState] = useState<number>(0);
 
     useEffect(() => {
         if (type === 'bun') {
@@ -31,7 +35,7 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
         item: {image, price, name, proteins, fat, carbohydrates, calories, _id, type},
     }))
 
-    const openModal = (ingredient) => {
+    const openModal = (ingredient: Pick<IIngredient, 'name' | 'image' | 'proteins' | 'fat' | 'carbohydrates' | 'calories'>) => {
         dispatch(addIngredient(ingredient));
     }
 
@@ -55,19 +59,6 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
         </div>
     );
 
-}
-
-BurgerIngredientCart.propTypes = {
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    _id: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    className: PropTypes.string
 }
 
 export default BurgerIngredientCart;

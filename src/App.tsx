@@ -1,23 +1,25 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import PropTypes from 'prop-types';
+import { useAppDispatch, useAppSelector } from '@reducers/hooks';
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Login, Home, Register, ForgotPassword, ResetPassword, Profile, ProfileOrders, Ingredient, NotFound } from './pages';
-import { OnlyAuth, OnlyUnAuth } from './components/protected-route';
+import { OnlyAuth, OnlyUnAuth } from '@components/protected-route';
 import { MainLayout, ProfileLayout } from './layouts';
 
-import { getIngredients } from './services/reducers/ingredientsReducer';
+import { getIngredients } from '@reducers/ingredientsReducer';
 
-import { checkUserAuth } from './services/reducers/userReducer';
-import Modal from './components/modals/modal/modal';
+import { checkUserAuth } from '@reducers/userReducer';
+import Modal from '@components/modals/modal/modal';
 
-function App({ ingredientsUrl }) {
-  const dispatch = useDispatch();
+interface IAppProps {
+  ingredientsUrl: string
+}
+
+function App({ ingredientsUrl }: IAppProps) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { ingredientsRrror } = useSelector(state => state.ingredients);
+  const { ingredientsRrror } = useAppSelector(state => state.ingredients);
 
   useEffect(() => {
     dispatch(getIngredients(ingredientsUrl));
@@ -56,7 +58,7 @@ function App({ ingredientsUrl }) {
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
-
+      
       {background && (
         <Routes>
           <Route path='/ingredients/:id' element={<Modal modalTitle="Детали ингредиента" close={closeIngredientModal}><Ingredient /></Modal>} />
@@ -64,10 +66,6 @@ function App({ ingredientsUrl }) {
       )}
     </>
   );
-}
-
-App.propTypes = {
-  ingredientsUrl: PropTypes.string.isRequired
 }
 
 export default App;

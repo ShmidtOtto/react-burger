@@ -1,14 +1,18 @@
-import { useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import style from './profile.module.css';
 import cn from 'classnames';
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { userApi } from '../../utils/api';
+import { userApi } from '@api/index';
 
-export default function Profile() {
-    const [profileData, setProfileData] = useState({});
-    const [initialProfileData, setInitialProfileData] = useState({});
+interface IProfileData {
+    [key: string]: string;
+}
+
+export default function Profile(): React.JSX.Element {
+    const [profileData, setProfileData] = useState<IProfileData | null>(null);
+    const [initialProfileData, setInitialProfileData] = useState<IProfileData | null>(null);
     const [isProfileDataSchange, setIsProfileDataSchange] = useState(false);
 
     useEffect(() => {
@@ -22,7 +26,7 @@ export default function Profile() {
     }, []);
 
     useEffect(() => {
-        if (profileData) {
+        if (profileData && initialProfileData) {
             setIsProfileDataSchange(
                 profileData.name !== initialProfileData.name ||
                 profileData.email !== initialProfileData.email ||
@@ -31,23 +35,26 @@ export default function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profileData])
 
-    const setValue = (e) => {
-        setProfileData({ ...profileData, [e.target.name]: e.target.value });
+    const setValue = (e: SyntheticEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement
+        setProfileData({ ...profileData, [target.name]: target.value });
     };
 
-    const onReset = (e) => {
+    const onReset = (e: SyntheticEvent) => {
         e.preventDefault();
         setProfileData(initialProfileData);
         setIsProfileDataSchange(false);
     }
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
-        let { user } = await userApi.updateUser(profileData);
-        if (user) {
-            setProfileData(user);
-            setInitialProfileData(user);
-            setIsProfileDataSchange(false);
+        if (profileData && 'name' in profileData && 'email' in profileData && 'password' in profileData) {
+            let { user } = await userApi.updateUser(profileData as {name: string, email: string, password: string});
+            if (user) {
+                setProfileData(user);
+                setInitialProfileData(user);
+                setIsProfileDataSchange(false);
+            }
         }
     }
     return (
@@ -58,7 +65,7 @@ export default function Profile() {
                     placeholder={'Имя'}
                     name='name'
                     size={'default'}
-                    value={profileData.name}
+                    value={profileData ? profileData.name : ''}
                     onChange={setValue}
                 />
                 <Input
@@ -67,7 +74,7 @@ export default function Profile() {
                     name='email'
                     size={'default'}
                     extraClass='mt-6'
-                    value={profileData.email}
+                    value={profileData ? profileData.email : ''}
                     onChange={setValue}
                 />
                 <Input
@@ -76,7 +83,7 @@ export default function Profile() {
                     name='password'
                     size={'default'}
                     extraClass='mt-6'
-                    value={profileData.password}
+                    value={profileData ? profileData.password : ''}
                     onChange={setValue}
                 />
                 {isProfileDataSchange && (

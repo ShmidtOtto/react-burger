@@ -1,4 +1,3 @@
-import { FC } from 'react'; 
 import { NavLink } from 'react-router-dom'; 
 
 import cn from 'classnames';
@@ -7,11 +6,11 @@ import style from './app-header.module.css';
 import AppHeaderTab from './app-header-tab/app-header-tab';
 import { BurgerIcon, Logo, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-interface IAppHeader {
+interface IAppHeaderProps {
     className?: string;
 }
 
-const AppHeader: FC<IAppHeader> = ({ className = '' }) => {
+function AppHeader ({ className = '' }: IAppHeaderProps): React.JSX.Element {
     return (
         <header className={cn(style.header, className)}>
             <nav className={cn(style.header_container)}>

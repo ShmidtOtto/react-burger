@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import style from './forgot-password.module.css'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import cn from 'classnames'
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import Spinner from '../../components/modals/spinner/spinner';
+import Spinner from '@components/modals/spinner/spinner';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { userApi } from '../../utils/api';
+import { userApi } from '@api/index';
 
-export default function ForgotPassword() {
+export default function ForgotPassword(): React.JSX.Element {
     const [forgotFormData, setForgotFormData] = useState({
         email: '',
     });
@@ -19,27 +19,30 @@ export default function ForgotPassword() {
 
     const navigate = useNavigate();
 
-    const setValue = (e) => {
-        setForgotFormData({ ...forgotFormData, [e.target.name]: e.target.value });
+    const setValue = (e: SyntheticEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement
+        setForgotFormData({ ...forgotFormData, [target.name]: target.value });
     };
 
-    const onSubmit = async (e) => {
+    const onSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         setIsSubmitting(true);
         e.preventDefault();
         try {
             await userApi.forgotPassword(forgotFormData.email);
             navigate('/reset-password', { state: { where: '/forgot-password' } });
         } catch (err) {
-            toast.error(err.message, {
-                position: "bottom-center",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
+            if (err instanceof Error) {
+                toast.error<string>(err.message, {
+                    position: "bottom-center",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            }
         } finally {
             setIsSubmitting(false);
         }

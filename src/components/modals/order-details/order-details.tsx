@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
-import { getOrder } from '../../../services/reducers/orderReducer';
+import { useAppDispatch, useAppSelector } from '@reducers/hooks';
+import { createOrder } from '@reducers/orderReducer';
 
 import cn from 'classnames';
 import style from './order-details.module.css';
@@ -14,14 +13,18 @@ import frame2 from './frame2.svg';
 import frame3 from './frame3.svg';
 const orderUrl = 'https://norma.nomoreparties.space/api/orders';
 
-function OrderDetails({ className }) {
-    const duspach = useDispatch();
-    const { constructorIngredients, buns } = useSelector(state => state.constructorIngredients);
-    const { orderNumber } = useSelector(state => state.order.currentOrder);
+interface IOrderDetailsProps {
+    className?: string
+}
+
+function OrderDetails({ className }: IOrderDetailsProps) : React.JSX.Element {
+    const duspach = useAppDispatch();
+    const { constructorIngredients, buns } = useAppSelector(state => state.constructorIngredients);
+    const { orderNumber } = useAppSelector(state => state.order.currentOrder);
 
     useEffect(() => {
         const [topBun, bottomBun] = buns;
-        duspach(getOrder({ orderUrl: orderUrl, ingredients: [topBun, ...constructorIngredients, bottomBun] }));
+        duspach(createOrder({ orderUrl: orderUrl, ingredients: [topBun, ...constructorIngredients, bottomBun] }));
     }, [duspach, constructorIngredients, buns]);
 
     return (
@@ -46,7 +49,4 @@ function OrderDetails({ className }) {
     )
 }
 
-OrderDetails.propTypes = {
-    className: PropTypes.string
-}
 export default OrderDetails;

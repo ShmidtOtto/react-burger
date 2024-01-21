@@ -1,4 +1,4 @@
-import { useRef, FC } from 'react';
+import { useRef } from 'react';
 
 import { useDispatch } from 'react-redux';
 
@@ -6,17 +6,17 @@ import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor-element.module.css';
 
-import { removeIngredient, moveIngredients, addIngredient } from '../../../services/reducers/constructorIngredientsReducer';
-import { IIngredient }  from '../../../interfaces';
+import { removeIngredient, moveIngredients, addIngredient } from '@reducers/constructorIngredientsReducer';
+import { IIngredient }  from '@interfaces/index';
 
-interface IBurgerCounstructorElement {
+interface IBurgerCounstructorElementProps {
     ingredient: IIngredient
 }
 
-const BurgerCounstructorElement: FC<IBurgerCounstructorElement> = ({ ingredient }): JSX.Element => {
-    const ref = useRef<HTMLDivElement>(null);
+function BurgerCounstructorElement ({ ingredient }: IBurgerCounstructorElementProps): React.JSX.Element {
+    const ref = useRef<HTMLDivElement | null>(null);
     const dispatch = useDispatch();
-    const [{ isDragging }, dragRef] = useDrag(() => ({
+    const [{ isDragging }, dragRef] = useDrag<IIngredient, unknown, { isDragging: boolean }>(() => ({
         type: 'ingredient',
         item: ingredient,
         collect: (monitor) => ({
@@ -24,7 +24,7 @@ const BurgerCounstructorElement: FC<IBurgerCounstructorElement> = ({ ingredient 
         })
     }));
 
-    const [, dropRef] = useDrop(() => ({
+    const [, dropRef] = useDrop<IIngredient, unknown, unknown>(() => ({
         accept: 'ingredient',
         drop(ingredient: IIngredient) {
             if (!ingredient.uuid) dispatch(addIngredient(ingredient));

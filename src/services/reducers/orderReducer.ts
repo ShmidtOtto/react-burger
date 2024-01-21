@@ -1,22 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit'
+import { IIngredient } from '@interfaces/index';
+import { orderApi } from '@api/index';
+import { ICreateOrderResponse } from '@api/order-api';
 
-export const getOrder = createAsyncThunk(
-    'order/getOrder',
-    async ({ orderUrl, ingredients }) => {
-        const response = await fetch(orderUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-                'Authorization': localStorage.getItem('accessToken')
-            },
-            body: JSON.stringify({ ingredients: ingredients.map(item => item._id) })
-        });
-        const data = await response.json();
-        return data;
+export const createOrder = createAsyncThunk(
+    'order/createOrder',
+    async ({ orderUrl, ingredients }: { orderUrl: string; ingredients: Array<IIngredient> }): Promise<ICreateOrderResponse> => {
+        return await orderApi.createOrder({ orderUrl, ingredients });
     }
 )
 
-const initialState = {
+interface IOrderInfo {
+    orderRequest: boolean,
+    orderRrror: boolean,
+    orderNumber: number | null
+}
+
+interface IOrderState {
+    orders: Array<IOrderInfo>;
+    currentOrder: IOrderInfo
+}
+
+const initialState: IOrderState = {
     orders: [],
     currentOrder: {
         orderRequest: false,
@@ -39,7 +45,7 @@ const orderReducer = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(getOrder.fulfilled, (state, action) => {
+        .addCase(createOrder.fulfilled, (state, action: PayloadAction<ICreateOrderResponse>) => {
             state.currentOrder = {
                 orderRequest: false,
                 orderRrror: false,
@@ -51,15 +57,17 @@ const orderReducer = createSlice({
                 orderRrror: false,
                 orderNumber: action.payload.order.number
             });
-        }).addCase(getOrder.rejected, (state) => {
+        }).addCase(createOrder.rejected, (state) => {
             state.currentOrder = {
                 orderRequest: false,
-                orderRrror: true
+                orderRrror: true,
+                orderNumber: null
             };
-        }).addCase(getOrder.pending, (state) => {
+        }).addCase(createOrder.pending, (state) => {
             state.currentOrder = {
                 orderRequest: true,
-                orderRrror: false
+                orderRrror: false,
+                orderNumber: null
             };
         })
     }
