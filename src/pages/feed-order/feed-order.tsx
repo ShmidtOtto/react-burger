@@ -14,14 +14,14 @@ const orderUrl = 'https://norma.nomoreparties.space/api/orders';
 
 export default function FeedOrder() {
     const dispatch = useAppDispatch();
-    const { id } = useParams<string>();
+    const { number } = useParams<string>();
 
     const order = useAppSelector(store => {
-        if (id) {
-            let order = store.feedOrders.orders.find(order => order._id === id);
+        if (number) {
+            let order = store.feedOrders.orders.find(order => String(order.number) === number);
             if (order) return order;
 
-            order = store.profileFeedOrder.orders.find(order => order._id === id);
+            order = store.profileFeedOrder.orders.find(order => String(order.number) === number);
             if (order) return order;
 
             if (store.feedOrderReducer.order) {
@@ -33,16 +33,16 @@ export default function FeedOrder() {
     });
 
     useEffect(() => {
-        if (id && !order) {
-            dispatch(getOrder({ orderUrl: orderUrl, orderNumber: id}));
+        if (number && !order) {
+            dispatch(getOrder({ orderUrl: orderUrl, orderNumber: number}));
         }
 
         return () => {
             removeOrder();
         }
-    }, [id, order]);
+    }, [number, order]);
 
-    if (!id) {
+    if (!number) {
         return (
             <></>
         )

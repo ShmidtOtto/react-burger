@@ -48,7 +48,7 @@ function App({ ingredientsUrl }: IAppProps) {
           <Route index element={<Home />} />
           <Route path='/ingredients/:id' element={<Ingredient />} />
           <Route path='/feed' element={<Feed />} />
-          <Route path='/feed/:id' element={<FeedOrder />} />
+          <Route path='/feed/:number' element={<FeedOrder />} />
           <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
           <Route path='/register' element={<OnlyUnAuth component={<Register />} />} />
           <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPassword />} />} />
@@ -57,7 +57,7 @@ function App({ ingredientsUrl }: IAppProps) {
             <Route index element={<OnlyAuth component={<Profile />} />} />
             <Route path='/profile/orders' element={<OnlyAuth component={<ProfileOrders />} />} />
           </Route>
-          <Route path='/profile/orders/:id' element={<OnlyAuth component={<ProfileOrder />} />} />
+          <Route path='/profile/orders/:number' element={<OnlyAuth component={<ProfileOrder />} />} />
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
@@ -65,8 +65,8 @@ function App({ ingredientsUrl }: IAppProps) {
       {background && (
         <Routes>
           <Route path='/ingredients/:id' element={<Modal modalTitle="Детали ингредиента" close={closeModal}><Ingredient /></Modal>} />
-          <Route path='/profile/orders/:id' element={<Modal modalTitle="" close={closeModal}><OrderCart /></Modal>} />
-          <Route path='/feed/:id' element={<Modal modalTitle="" close={closeModal}><OrderCart /></Modal>} />
+          <Route path='/profile/orders/:number' element={<Modal modalTitle="" close={closeModal}><OrderCart /></Modal>} />
+          <Route path='/feed/:number' element={<Modal modalTitle="" close={closeModal}><OrderCart /></Modal>} />
         </Routes>
       )}
     </>

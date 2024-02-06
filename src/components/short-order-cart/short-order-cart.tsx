@@ -49,7 +49,7 @@ export default function ShortOrderCart({ order, to }: IOrderCartProps): React.JS
 
     return (
         <NavLink 
-            to={`${to}${order._id}`}
+            to={`${to}${order.number}`}
             state={{ background: location }}
             className={cn(style.short_cart_container, 'p-6', 'mb-6')}>
             <div className={cn(style.short_cart_header)}>
