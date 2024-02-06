@@ -18,7 +18,7 @@ function AppHeader ({ className = '' }: IAppHeaderProps): React.JSX.Element {
                     <NavLink to="/" end>
                         {({ isActive }) => <AppHeaderTab Icon={BurgerIcon} text="Конструктор" className='mr-2' active={isActive} />}
                     </NavLink>
-                    <NavLink to="/profile/orders" end>
+                    <NavLink to="/feed" end>
                         {({ isActive }) => <AppHeaderTab Icon={ListIcon} text="Лента заказов" active={isActive} />}
                     </NavLink>
                 </div>

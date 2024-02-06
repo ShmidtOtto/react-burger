@@ -3,7 +3,7 @@ import { IIngredient, IOrderInfo, orderInfoStatus } from "@interfaces/index";
 import cn from 'classnames';
 import style from './order-cart.module.css'
 
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CurrencyIcon, FormattedDate  } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useAppSelector } from "@reducers/hooks";
 import { useEffect, useState } from "react";
 
@@ -67,14 +67,6 @@ export default function OrderCart({ order }: IOrderCartProps): React.JSX.Element
         return ingredientsList.reduce((acc, ingredient) => acc + ingredient[1] * ingredient[0].price, 0);
     }
 
-    const getCreateDate = (date: string): string => {
-        const dateObj = new Date(date);
-        const day = dateObj.getDate();
-        const month = dateObj.toLocaleString('default', { month: 'short' });
-        const year = dateObj.getFullYear();
-        return `${day} ${month} ${year}`
-    }
-
     if (!order) {
         return <></>;
     }
@@ -97,7 +89,9 @@ export default function OrderCart({ order }: IOrderCartProps): React.JSX.Element
                 <IngredientsList ingredients={orderIngredients}/>
             </div>
             <div className={cn(style.order_cart_footer, 'mt-10')}>
-                <p className="text text_type_main-default">{getCreateDate(order.createdAt)}</p>
+                <p className="text text_type_main-default">
+                    <FormattedDate date={new Date(order.createdAt)} />
+                </p>
                 <p className={cn(style.order_cart_footer_price)}>
                     <span className="text text_type_digits-default mr-2">{getOrderPrice(orderIngredients)}</span>
                     <CurrencyIcon type="primary"/>

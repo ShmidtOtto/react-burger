@@ -9,6 +9,7 @@ import { IOrderInfo } from '@interfaces/index';
 
 
 const orderUrl = 'https://norma.nomoreparties.space/api/orders';
+
 export default function OrderCart() {
     const dispatch = useAppDispatch();
     const { id } = useParams<string>();
