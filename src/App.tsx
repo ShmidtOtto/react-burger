@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@reducers/hooks';
 
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
-import { Login, Home, Register, ForgotPassword, ResetPassword, Profile, ProfileOrders, Ingredient, NotFound } from './pages';
+import { Login, Home, Register, ForgotPassword, ResetPassword, Profile, ProfileOrders, Ingredient, NotFound, Feed, FeedOrder, ProfileOrder, OrderCart } from './pages';
 import { OnlyAuth, OnlyUnAuth } from '@components/protected-route';
 import { MainLayout, ProfileLayout } from './layouts';
 
@@ -37,7 +37,7 @@ function App({ ingredientsUrl }: IAppProps) {
   const location = useLocation();
   const background = location.state && location.state.background;
 
-  const closeIngredientModal = () => {
+  const closeModal = () => {
     navigate(-1)
   }
 
@@ -47,6 +47,8 @@ function App({ ingredientsUrl }: IAppProps) {
         <Route path='/' element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path='/ingredients/:id' element={<Ingredient />} />
+          <Route path='/feed' element={<Feed />} />
+          <Route path='/feed/:id' element={<FeedOrder />} />
           <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
           <Route path='/register' element={<OnlyUnAuth component={<Register />} />} />
           <Route path='/forgot-password' element={<OnlyUnAuth component={<ForgotPassword />} />} />
@@ -55,13 +57,16 @@ function App({ ingredientsUrl }: IAppProps) {
             <Route index element={<OnlyAuth component={<Profile />} />} />
             <Route path='/profile/orders' element={<OnlyAuth component={<ProfileOrders />} />} />
           </Route>
+          <Route path='/profile/orders/:id' element={<OnlyAuth component={<ProfileOrder />} />} />
           <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
       
       {background && (
         <Routes>
-          <Route path='/ingredients/:id' element={<Modal modalTitle="Детали ингредиента" close={closeIngredientModal}><Ingredient /></Modal>} />
+          <Route path='/ingredients/:id' element={<Modal modalTitle="Детали ингредиента" close={closeModal}><Ingredient /></Modal>} />
+          <Route path='/profile/orders/:id' element={<Modal modalTitle="" close={closeModal}><OrderCart /></Modal>} />
+          <Route path='/feed/:id' element={<Modal modalTitle="" close={closeModal}><OrderCart /></Modal>} />
         </Routes>
       )}
     </>
