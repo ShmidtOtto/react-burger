@@ -1,4 +1,4 @@
-import { IIngredient, IUserInfo } from '@interfaces/index';
+import { IIngredient, IOrderInfo, IUserInfo } from '@interfaces/index';
 
 interface Owner extends Pick<IUserInfo, 'name' | 'email'> {
     createdAt: string;
@@ -18,7 +18,11 @@ export interface ICreateOrderResponse {
     }
 }
 
-async function createOrder ({ orderUrl, ingredients }: { orderUrl: string; ingredients:Array<IIngredient> }): Promise<ICreateOrderResponse> {
+export interface IGetOrderResponse {
+    orders: Array<IOrderInfo>
+}
+
+async function createOrder ({ orderUrl, ingredients }: { orderUrl: string; ingredients: Array<IIngredient> }): Promise<ICreateOrderResponse> {
     const response = await fetch(orderUrl, {
         method: 'POST',
         headers: {
@@ -31,6 +35,13 @@ async function createOrder ({ orderUrl, ingredients }: { orderUrl: string; ingre
     return data;
 }
 
+async function getOrder({ orderUrl, orderNumber }: { orderUrl: string; orderNumber: string }): Promise<IGetOrderResponse> {
+    const response = await fetch(orderUrl + '/' + orderNumber);
+    const data = await response.json();
+    return data;
+}
+
 export const orderApi = {
-    createOrder: createOrder
+    createOrder: createOrder,
+    getOrder: getOrder
 };

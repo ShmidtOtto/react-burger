@@ -13,10 +13,10 @@ export const getIngredients = createAsyncThunk(
 );
 
 interface IIngredientsState {
-    ingredients: IIngredient[];
+    ingredients: Array<IIngredient>;
     ingredientsRequest: boolean;
     ingredientsRrror: boolean;
-    ingredientsCategories: ingredientsCategories[];
+    ingredientsCategories: Array<ingredientsCategories>;
 }
 
 const initialState: IIngredientsState = { ingredients: [], ingredientsRequest: false, ingredientsRrror: false, ingredientsCategories: [] };

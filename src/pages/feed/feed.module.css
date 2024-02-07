@@ -1,0 +1,20 @@
+.feed_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.feed_container_content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.feed_container_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: inherit;
+    align-items: center;
+}

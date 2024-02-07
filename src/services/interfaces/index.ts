@@ -24,3 +24,24 @@ export enum ingredientsCategories {
     sauce = 'sauce',
     main = 'main'
 }
+
+export enum WebsocketStatus {
+    CONNECTING = 'CONNECTING...',
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE'
+  }
+
+export enum orderInfoStatus {
+    PANDING = 'pending',
+    DONE = 'done'
+}
+
+export interface IOrderInfo {
+    createdAt: string;
+    ingredients: Array<string>
+    name: string;
+    number: number;
+    status: orderInfoStatus;
+    updatedAt: string;
+    _id: string;
+}
