@@ -1,7 +1,7 @@
 name: Run Test Action
 on: [push]
 jobs:
-  Run Test:
+  Run-test:
     runs-on: ubuntu-latest
     strategy: 
       matrix:
