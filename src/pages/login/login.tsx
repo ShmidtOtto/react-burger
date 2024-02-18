@@ -91,6 +91,7 @@ export default function Login(): React.JSX.Element {
                         <Input
                             type={'email'}
                             name={'email'}
+                            data-test-id={'email-input'}
                             value={loginFormData.email}
                             onChange={setValue}
                             placeholder={'E-mail'}
@@ -103,6 +104,7 @@ export default function Login(): React.JSX.Element {
                             type={'password'}
                             placeholder={'Пароль'}
                             name={'password'}
+                            data-test-id={'password-input'}
                             value={loginFormData.password}
                             onChange={setValue}
                             size={'default'}
@@ -111,7 +113,7 @@ export default function Login(): React.JSX.Element {
                             errorText={loginFormFileds.password.errorText}
                             error={loginFormFileds.password.error}
                         />
-                        <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
+                        <Button htmlType="submit" type="primary" size="large" extraClass="mt-6" data-test-id={'login-button'}>
                             Войти
                         </Button>
                     </form>

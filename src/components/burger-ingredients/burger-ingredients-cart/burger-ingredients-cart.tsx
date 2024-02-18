@@ -43,6 +43,7 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
         <div className={cn(className)}>
             <NavLink 
                 to={`/ingredients/${_id}`}
+                data-test-id={_id}
                 state={{ background: location }}>
                 <div className={cn(style.burger_ingredients_category_item, style.burger_ingredients_category_count_coutainer)}
                     ref={dragRef}

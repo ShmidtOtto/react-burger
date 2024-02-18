@@ -66,7 +66,7 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
         <section className={cn(style.burger_constructor_container, className)}>
             {modalIsOpen && <Modal close={closeModal}><OrderDetails /></Modal>}
             <div className={cn(style.burger_constructor_ingredients_container, "mr-4")}>
-                <div className={style.burger_constructor_ingredient_container} ref={dropTopBunRef}>
+                <div className={style.burger_constructor_ingredient_container} ref={dropTopBunRef} data-test-id='top-bun'>
                     {topBun ? <ConstructorElement
                         type={'top'}
                         isLocked={true}
@@ -75,7 +75,7 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
                         thumbnail={topBun.image}
                     /> : <EmptyConstructorElement type={'top'} />}
                 </div>
-                <div className={cn(style.burger_constructor_ingredients_scroll_container, "custom-scroll", "pr-4")}>
+                <div className={cn(style.burger_constructor_ingredients_scroll_container, "custom-scroll", "pr-4")} data-test-id='constructor'>
                     {
                         !constructorIngredients.length ?
                             <div ref={dropIngredientRef}>
@@ -89,7 +89,7 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
                             })
                     }
                 </div>
-                <div className={style.burger_constructor_ingredient_container} ref={dropBottomBunRef}>
+                <div className={style.burger_constructor_ingredient_container} ref={dropBottomBunRef} data-test-id='bottom-bun'>
                     {bottomBun ? <ConstructorElement
                         type={'bottom'}
                         isLocked={true}
@@ -104,7 +104,7 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
                     <p className="text text_type_main-large pr-4">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large" onClick={openModal}>
+                <Button htmlType="button" type="primary" size="large" onClick={openModal} data-test-id={'submit-order'}>
                     Оформить заказ
                 </Button>
             </div>

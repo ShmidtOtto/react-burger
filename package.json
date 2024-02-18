@@ -32,8 +32,9 @@
     "start": "craco start",
     "build": "craco build",
     "test": "react-scripts test",
+    "e2e": "npx cypress open",
     "eject": "react-scripts eject",
-    "deploy-script": "npm run build && scp -r ./build/* admin@158.160.68.199:/home/admin/stellar-frontend" 
+    "deploy-script": "npm run build && scp -r ./build/* admin@158.160.68.199:/home/admin/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [
@@ -54,10 +55,15 @@
     ]
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.5",
+    "@testing-library/cypress": "^10.0.1",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "craco": "^0.0.3",
+    "cypress": "^13.6.4",
     "fetch-mock": "^9.11.0",
+    "jest": "^27.5.1",
+    "jest-fetch-mock": "^3.0.3",
     "redux-mock-store": "^1.5.4"
   }
 }

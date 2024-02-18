@@ -67,7 +67,7 @@ export default function ResetPassword(): React.JSX.Element {
                             type={'password'}
                             placeholder={'Введите новый пароль'}
                             name={'password'}
-                            value=''
+                            value={resetFormData.password}
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"
@@ -77,7 +77,7 @@ export default function ResetPassword(): React.JSX.Element {
                             type={'text'}
                             placeholder={'Введите код из письма'}
                             name={'token'}
-                            value=''
+                            value={resetFormData.token}
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"

@@ -33,7 +33,8 @@
       "@interfaces/*": [
         "services/interfaces/*"
       ],
-    }
+    },
+    "types": ["cypress", "@4tw/cypress-drag-drop"]
   },
   "include": [
     "src"

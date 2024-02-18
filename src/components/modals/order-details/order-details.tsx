@@ -31,7 +31,7 @@ function OrderDetails({ className }: IOrderDetailsProps) : React.JSX.Element {
         <>
             {!orderNumber ? <Spinner /> :
                 <div className={cn(style.order_details_container, className)}>
-                    <h2 className={cn('text', 'text_type_digits-large', 'mt-20')}>{orderNumber}</h2>
+                    <h2 className={cn('text', 'text_type_digits-large', 'mt-20')} data-test-id="order-number">{orderNumber}</h2>
                     <p className={cn('text', 'text_type_main-medium', 'mt-8')}>идентификатор заказа</p>
                     <div className={cn(style.ok_container, 'mt-15')}>
                         <img src={frame} alt="order ok frame" className={style.frame} />

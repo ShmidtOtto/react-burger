@@ -59,7 +59,7 @@ export default function Register(): React.JSX.Element {
                             type={'text'}
                             placeholder={'Имя'}
                             name='name'
-                            value=''
+                            value={loginFormData.name}
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"
@@ -68,7 +68,7 @@ export default function Register(): React.JSX.Element {
                             type={'email'}
                             placeholder={'E-mail'}
                             name='email'
-                            value=''
+                            value={loginFormData.email}
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"
@@ -77,7 +77,7 @@ export default function Register(): React.JSX.Element {
                             type={'password'}
                             placeholder={'Пароль'}
                             name='password'
-                            value=''
+                            value={loginFormData.password}
                             onChange={setValue}
                             size={'default'}
                             extraClass="mt-6"
