@@ -1,5 +1,5 @@
-describe('My First Test', () => {
-  it('Visits the Kitchen Sink', async () => {
+describe('Buy burger', () => {
+  it('Buy burger after login', async () => {
     cy.visit('/');
     cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', { fixture: 'ingredients.json' });
 

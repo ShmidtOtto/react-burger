@@ -31,7 +31,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "e2e": "npx cypress open",
+    "cypress:open": "cypress open",
     "eject": "react-scripts eject",
     "deploy-script": "npm run build && scp -r ./build/* admin@158.160.68.199:/home/admin/stellar-frontend"
   },

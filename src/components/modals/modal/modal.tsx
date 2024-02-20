@@ -32,7 +32,7 @@ function Modal({ modalTitle, close, children, className }: ModalProps): React.JS
                 <div className={style.modal_wrapper}>
                     <div className={cn(style.modal_header, 'pl-10', 'pt-10', 'pr-10')}>
                         <h2 className='text text_type_main-large'>{modalTitle}</h2>
-                        <div className={style.modal_icon_close}>
+                        <div className={style.modal_icon_close} data-test-id="modal-close">
                             <CloseIcon type="primary" onClick={close}/>
                         </div>
                     </div>

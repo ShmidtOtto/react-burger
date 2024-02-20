@@ -22,7 +22,7 @@ function IngredientDetails(): React.JSX.Element {
     return (
         <div className={cn(style.ingredient_details_container)}>
             <img src={image} alt={name} className={`${style.ingredient_details_container_img} mb-4`} />
-            <p className="text text_type_main-medium mb-8">{name}</p>
+            <p className="text text_type_main-medium mb-8" data-test-id="ingredient-name">{name}</p>
             <div className={`${style.ingredient_detail_container} mb-15`}>
                 <Details title="Калории,ккал" value={calories} className="mr-5" />
                 <Details title="Белки, г" value={proteins} className="mr-5" />

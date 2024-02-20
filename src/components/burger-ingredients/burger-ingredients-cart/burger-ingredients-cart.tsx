@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@reducers/hooks';
 import { useLocation, NavLink } from 'react-router-dom';
 
-import { v4 } from 'uuid'; 
-
 import cn from 'classnames';
 import style from './burger-ingredients-cart.module.css';
 

@@ -4,25 +4,25 @@ const constructorIngredientsReducerInitialState = {
     ...initialState
 };
 
+const ingredient = {
+    image: 'https://code.s3.yandex.net/react/code/bun-02.png',
+    price: 1255,
+    name: 'Краторная булка N-200i',
+    proteins: 80,
+    fat: 24,
+    carbohydrates: 53,
+    calories: 420,
+    _id: '643d69a5c3f7b9001cfa093e',
+    type: 'bun',
+    uuid: '54b43a5c-d249-48e5-a496-0a3899056e9f'
+};
+
 describe('feedOrderReducer test', () => {
     test('should return the initial state', () => {
         expect(reducer(undefined, { type: '' })).toEqual(constructorIngredientsReducerInitialState)
     });
 
     test('should handle addIngredient', () => {
-        const ingredient = {
-            image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-            price: 988,
-            name: 'Филе Люминесцентного тетраодонтимформа',
-            proteins: 44,
-            fat: 26,
-            carbohydrates: 85,
-            calories: 643,
-            _id: '643d69a5c3f7b9001cfa093e',
-            type: 'main',
-            uuid: '54b43a5c-d249-48e5-a496-0a3899056e9f'
-        };
-
         expect(reducer(constructorIngredientsReducerInitialState, addIngredient(ingredient))).toEqual({
             ...constructorIngredientsReducerInitialState,
             constructorIngredients: [ingredient],
@@ -31,19 +31,6 @@ describe('feedOrderReducer test', () => {
     });
 
     test('should handle removeIngredient', () => {
-        const ingredient = {
-            image: 'https://code.s3.yandex.net/react/code/meat-03.png',
-            price: 988,
-            name: 'Филе Люминесцентного тетраодонтимформа',
-            proteins: 44,
-            fat: 26,
-            carbohydrates: 85,
-            calories: 643,
-            _id: '643d69a5c3f7b9001cfa093e',
-            type: 'main',
-            uuid: '54b43a5c-d249-48e5-a496-0a3899056e9f'
-        };
-
         const state = {
             ...constructorIngredientsReducerInitialState,
             constructorIngredients: [ingredient],
@@ -57,19 +44,6 @@ describe('feedOrderReducer test', () => {
     });
 
     test('should handle addBun', () => {
-        const ingredient = {
-            image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-            price: 1255,
-            name: 'Краторная булка N-200i',
-            proteins: 80,
-            fat: 24,
-            carbohydrates: 53,
-            calories: 420,
-            _id: '643d69a5c3f7b9001cfa093e',
-            type: 'bun',
-            uuid: '54b43a5c-d249-48e5-a496-0a3899056e9f'
-        };
-
         expect(reducer(constructorIngredientsReducerInitialState, addBun(ingredient))).toEqual({
             ...constructorIngredientsReducerInitialState,
             bun: ingredient,
@@ -78,19 +52,6 @@ describe('feedOrderReducer test', () => {
     });
 
     test('removeBun handle addBun', () => {
-        const ingredient = {
-            image: 'https://code.s3.yandex.net/react/code/bun-02.png',
-            price: 1255,
-            name: 'Краторная булка N-200i',
-            proteins: 80,
-            fat: 24,
-            carbohydrates: 53,
-            calories: 420,
-            _id: '643d69a5c3f7b9001cfa093e',
-            type: 'bun',
-            uuid: '54b43a5c-d249-48e5-a496-0a3899056e9f'
-        };
-
         const state = {
             ...constructorIngredientsReducerInitialState,
             bun: ingredient

@@ -18,7 +18,7 @@ export default function ProfileOrders(): React.JSX.Element {
         return () => {
             dispatch(wsDisconnectProfileFeed());
         }
-    }, []);
+    }, [dispatch]);
 
     if (isDisconnected) {
         return <></>;
