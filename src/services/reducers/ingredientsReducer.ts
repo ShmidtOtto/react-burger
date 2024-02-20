@@ -19,7 +19,12 @@ interface IIngredientsState {
     ingredientsCategories: Array<ingredientsCategories>;
 }
 
-const initialState: IIngredientsState = { ingredients: [], ingredientsRequest: false, ingredientsRrror: false, ingredientsCategories: [] };
+export const initialState: IIngredientsState = { 
+    ingredients: [], 
+    ingredientsRequest: false, 
+    ingredientsRrror: false, 
+    ingredientsCategories: [] 
+};
 
 const ingredientsReducer = createSlice({
     name: 'ingredients',

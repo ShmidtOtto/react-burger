@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@reducers/hooks';
 import { useLocation, NavLink } from 'react-router-dom';
 
+import { v4 } from 'uuid'; 
+
 import cn from 'classnames';
 import style from './burger-ingredients-cart.module.css';
 
@@ -19,16 +21,16 @@ interface IBurgerIngredientCartProps extends IIngredient {
 function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '', _id = '', type = '' }: IBurgerIngredientCartProps): React.JSX.Element {
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const { constructorIngredients, buns } = useAppSelector(state => state.constructorIngredients);
+    const { constructorIngredients, bun } = useAppSelector(state => state.constructorIngredients);
     const [count, setState] = useState<number>(0);
 
     useEffect(() => {
         if (type === 'bun') {
-            setState(buns.filter(ingredient => ingredient._id === _id).length);
+            setState(_id === bun?._id ? 2 : 0);
         } else {
             setState(constructorIngredients.filter(ingredient => ingredient._id === _id).length);
         }
-    }, [constructorIngredients, buns, _id, type]);
+    }, [constructorIngredients, bun, _id, type]);
 
     const [, dragRef] = useDrag(() => ({
         type: type === 'bun' ? 'bun' : 'ingredient',

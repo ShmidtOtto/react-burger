@@ -6,7 +6,7 @@ interface IIngredientDetailsState extends Pick<IIngredient, 'name' | 'image' | '
 
 }
 
-const initialState: IIngredientDetailsState = { 
+export const initialState: IIngredientDetailsState = { 
     image: '',
     name: '',
     proteins: 0,

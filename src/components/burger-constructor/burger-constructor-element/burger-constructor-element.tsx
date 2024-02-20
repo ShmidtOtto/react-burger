@@ -1,10 +1,12 @@
 import { useRef } from 'react';
 
 import { useDispatch } from 'react-redux';
+import { v4 } from 'uuid';
 
 import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor-element.module.css';
+
 
 import { removeIngredient, moveIngredients, addIngredient } from '@reducers/constructorIngredientsReducer';
 import { IIngredient }  from '@interfaces/index';
@@ -27,7 +29,10 @@ function BurgerCounstructorElement ({ ingredient }: IBurgerCounstructorElementPr
     const [, dropRef] = useDrop<IIngredient, unknown, unknown>(() => ({
         accept: 'ingredient',
         drop(ingredient: IIngredient) {
-            if (!ingredient.uuid) dispatch(addIngredient(ingredient));
+            if (!ingredient.uuid) dispatch(addIngredient({
+                ...ingredient,
+                uuid: v4()
+            }));
         },
         hover(item, monitor) {
             if (!ref.current) return;

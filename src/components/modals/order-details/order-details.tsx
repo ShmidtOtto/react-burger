@@ -19,13 +19,14 @@ interface IOrderDetailsProps {
 
 function OrderDetails({ className }: IOrderDetailsProps) : React.JSX.Element {
     const duspach = useAppDispatch();
-    const { constructorIngredients, buns } = useAppSelector(state => state.constructorIngredients);
+    const { constructorIngredients, bun } = useAppSelector(state => state.constructorIngredients);
     const { orderNumber } = useAppSelector(state => state.order.currentOrder);
 
     useEffect(() => {
-        const [topBun, bottomBun] = buns;
-        duspach(createOrder({ orderUrl: orderUrl, ingredients: [topBun, ...constructorIngredients, bottomBun] }));
-    }, [duspach, constructorIngredients, buns]);
+        if (bun) {
+            duspach(createOrder({ orderUrl: orderUrl, ingredients: [bun, ...constructorIngredients, bun] }));
+        }
+    }, [duspach, constructorIngredients, bun]);
 
     return (
         <>

@@ -22,7 +22,7 @@ interface IOrderState {
     currentOrder: IOrderInfo
 }
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
     orders: [],
     currentOrder: {
         orderRequest: false,

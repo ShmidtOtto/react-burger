@@ -17,7 +17,7 @@ interface IInitialState {
     totalToday: number;
 }
 
-const initialState: IInitialState = {
+export const initialState: IInitialState = {
     orders: [],
     status: WebsocketStatus.OFFLINE,
     connectionError: '',
