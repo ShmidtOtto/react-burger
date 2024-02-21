@@ -19,16 +19,16 @@ interface IBurgerIngredientCartProps extends IIngredient {
 function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, fat = 0, carbohydrates = 0, calories = 0, className = '', _id = '', type = '' }: IBurgerIngredientCartProps): React.JSX.Element {
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const { constructorIngredients, buns } = useAppSelector(state => state.constructorIngredients);
+    const { constructorIngredients, bun } = useAppSelector(state => state.constructorIngredients);
     const [count, setState] = useState<number>(0);
 
     useEffect(() => {
         if (type === 'bun') {
-            setState(buns.filter(ingredient => ingredient._id === _id).length);
+            setState(_id === bun?._id ? 2 : 0);
         } else {
             setState(constructorIngredients.filter(ingredient => ingredient._id === _id).length);
         }
-    }, [constructorIngredients, buns, _id, type]);
+    }, [constructorIngredients, bun, _id, type]);
 
     const [, dragRef] = useDrag(() => ({
         type: type === 'bun' ? 'bun' : 'ingredient',
@@ -43,6 +43,7 @@ function BurgerIngredientCart({ image = '', price = 0, name = '', proteins = 0, 
         <div className={cn(className)}>
             <NavLink 
                 to={`/ingredients/${_id}`}
+                data-test-id={_id}
                 state={{ background: location }}>
                 <div className={cn(style.burger_ingredients_category_item, style.burger_ingredients_category_count_coutainer)}
                     ref={dragRef}

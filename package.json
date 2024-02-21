@@ -7,7 +7,6 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
     "@types/node": "^16.18.62",
     "@types/react-router-dom": "^5.3.3",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
@@ -31,8 +30,10 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "craco test",
+    "cypress:open": "cypress open",
+    "eject": "react-scripts eject",
+    "deploy-script": "npm run build && scp -r ./build/* admin@158.160.68.199:/home/admin/stellar-frontend"
   },
   "eslintConfig": {
     "extends": [
@@ -53,8 +54,18 @@
     ]
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.5",
+    "@testing-library/cypress": "^10.0.1",
+    "@types/jest": "^29.5.12",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
-    "craco": "^0.0.3"
-  }
+    "craco": "^0.0.3",
+    "cypress": "^13.6.4",
+    "fetch-mock": "^9.11.0",
+    "jest": "^27.5.1",
+    "jest-fetch-mock": "^3.0.3",
+    "redux-mock-store": "^1.5.4",
+    "ts-jest": "^29.1.2"
+  },
+  "cracoConfig": "craco.config.js"
 }

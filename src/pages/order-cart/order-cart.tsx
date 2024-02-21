@@ -38,7 +38,7 @@ export default function OrderCart() {
         return () => {
             removeOrder();
         }
-    }, [number, order]);
+    }, [number, order, dispatch]);
 
     if (!number) {
         return (

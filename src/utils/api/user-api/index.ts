@@ -42,7 +42,7 @@ interface IResetPasswordResponse extends IStatusResponse {
 }
 
 
-const checkReponse = <T>(response: Response ): Promise<T> => {
+export const checkReponse = <T>(response: Response ): Promise<T> => {
     return response.ok ? response.json().then(response => Promise.resolve<T>(response)) : response.json().then((err) => Promise.reject(err));
 };
 

@@ -19,19 +19,20 @@ interface IOrderDetailsProps {
 
 function OrderDetails({ className }: IOrderDetailsProps) : React.JSX.Element {
     const duspach = useAppDispatch();
-    const { constructorIngredients, buns } = useAppSelector(state => state.constructorIngredients);
+    const { constructorIngredients, bun } = useAppSelector(state => state.constructorIngredients);
     const { orderNumber } = useAppSelector(state => state.order.currentOrder);
 
     useEffect(() => {
-        const [topBun, bottomBun] = buns;
-        duspach(createOrder({ orderUrl: orderUrl, ingredients: [topBun, ...constructorIngredients, bottomBun] }));
-    }, [duspach, constructorIngredients, buns]);
+        if (bun) {
+            duspach(createOrder({ orderUrl: orderUrl, ingredients: [bun, ...constructorIngredients, bun] }));
+        }
+    }, [duspach, constructorIngredients, bun]);
 
     return (
         <>
             {!orderNumber ? <Spinner /> :
                 <div className={cn(style.order_details_container, className)}>
-                    <h2 className={cn('text', 'text_type_digits-large', 'mt-20')}>{orderNumber}</h2>
+                    <h2 className={cn('text', 'text_type_digits-large', 'mt-20')} data-test-id="order-number">{orderNumber}</h2>
                     <p className={cn('text', 'text_type_main-medium', 'mt-8')}>идентификатор заказа</p>
                     <div className={cn(style.ok_container, 'mt-15')}>
                         <img src={frame} alt="order ok frame" className={style.frame} />

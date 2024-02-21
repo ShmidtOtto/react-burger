@@ -21,7 +21,7 @@ export default function Feed(): React.JSX.Element {
         return () => {
             dispatch(wsDisconnectFeed());
         }
-    }, []);
+    }, [dispatch]);
 
     if (isDisconnected) {
         return <></>;

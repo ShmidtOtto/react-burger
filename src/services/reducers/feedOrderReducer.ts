@@ -16,7 +16,7 @@ interface IInitialState {
     order: IOrderInfo | null;
 }
 
-const initialState: IInitialState = {
+export const initialState: IInitialState = {
     order: null
 }
 
@@ -34,7 +34,7 @@ const feedOrderReducer = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getOrder.fulfilled, (state, action: PayloadAction<IGetOrderResponse>) => {
-                if (!action.payload.orders) {
+                if (!action.payload.orders[0]) {
                     state.order = null;
                     return;
                 } else {

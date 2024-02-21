@@ -2,6 +2,8 @@ import { useState, FC } from 'react';
 import { useAppSelector, useAppDispatch } from '@reducers/hooks';
 import { IIngredient } from '@interfaces/index';
 
+import { v4 } from 'uuid';
+
 import { useNavigate } from 'react-router-dom';
 
 import cn from 'classnames';
@@ -26,7 +28,7 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const { totalPrice, buns: [topBun, bottomBun], constructorIngredients } = useAppSelector(state => state.constructorIngredients);
+    const { totalPrice, bun, constructorIngredients } = useAppSelector(state => state.constructorIngredients);
     const { user } = useAppSelector(state => state.user);
 
     const openModal = (): void => {
@@ -44,7 +46,10 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
     const [, dropIngredientRef] = useDrop<IIngredient, unknown, unknown>(() => ({
         accept: 'ingredient',
         drop(ingredient) {
-            dispatch(addIngredient(ingredient));
+            dispatch(addIngredient({
+                ...ingredient,
+                uuid: v4()
+            }));
         }
     }));
 
@@ -66,16 +71,16 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
         <section className={cn(style.burger_constructor_container, className)}>
             {modalIsOpen && <Modal close={closeModal}><OrderDetails /></Modal>}
             <div className={cn(style.burger_constructor_ingredients_container, "mr-4")}>
-                <div className={style.burger_constructor_ingredient_container} ref={dropTopBunRef}>
-                    {topBun ? <ConstructorElement
+                <div className={style.burger_constructor_ingredient_container} ref={dropTopBunRef} data-test-id='top-bun'>
+                    {bun ? <ConstructorElement
                         type={'top'}
                         isLocked={true}
-                        text={topBun.name}
-                        price={topBun.price}
-                        thumbnail={topBun.image}
+                        text={bun.name}
+                        price={bun.price}
+                        thumbnail={bun.image}
                     /> : <EmptyConstructorElement type={'top'} />}
                 </div>
-                <div className={cn(style.burger_constructor_ingredients_scroll_container, "custom-scroll", "pr-4")}>
+                <div className={cn(style.burger_constructor_ingredients_scroll_container, "custom-scroll", "pr-4")} data-test-id='constructor'>
                     {
                         !constructorIngredients.length ?
                             <div ref={dropIngredientRef}>
@@ -89,13 +94,13 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
                             })
                     }
                 </div>
-                <div className={style.burger_constructor_ingredient_container} ref={dropBottomBunRef}>
-                    {bottomBun ? <ConstructorElement
+                <div className={style.burger_constructor_ingredient_container} ref={dropBottomBunRef} data-test-id='bottom-bun'>
+                    {bun ? <ConstructorElement
                         type={'bottom'}
                         isLocked={true}
-                        text={bottomBun.name}
-                        price={bottomBun.price}
-                        thumbnail={bottomBun.image}
+                        text={bun.name}
+                        price={bun.price}
+                        thumbnail={bun.image}
                     /> : <EmptyConstructorElement type={'bottom'} />}
                 </div>
             </div>
@@ -104,7 +109,7 @@ const BurgerConstructor: FC<IBurgerConstructor> = ({ className = '' }): JSX.Elem
                     <p className="text text_type_main-large pr-4">{totalPrice}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large" onClick={openModal}>
+                <Button htmlType="button" type="primary" size="large" onClick={openModal} data-test-id={'submit-order'}>
                     Оформить заказ
                 </Button>
             </div>

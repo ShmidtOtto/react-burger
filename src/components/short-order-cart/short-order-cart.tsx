@@ -40,11 +40,12 @@ export default function ShortOrderCart({ order, to }: IOrderCartProps): React.JS
         } else {
             setOrderIngredients(null);
         }
-    }, [ingredients])
+    }, [ingredients, order.ingredients])
 
     const getPrice = useCallback((OrderIngredientsInfo: Array<IIngredient> | null) => {
         if (!OrderIngredientsInfo) return 0;
         return OrderIngredientsInfo.reduce((acc, ingredient) => acc + ingredient.price, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ingredients]);
 
     return (

@@ -41,7 +41,7 @@ export default function ProfileOrder(): React.JSX.Element {
         return () => {
             removeOrder();
         }
-    }, [number, order]);
+    }, [number, order, dispatch]);
 
     if (!number) {
         return (

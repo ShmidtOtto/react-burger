@@ -40,7 +40,7 @@ export default function FeedOrder() {
         return () => {
             removeOrder();
         }
-    }, [number, order]);
+    }, [number, order, dispatch]);
 
     if (!number) {
         return (
